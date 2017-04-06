@@ -4,7 +4,7 @@
 	width: 100%;
 	/*max-width: 500px;*/
 	text-align: center;
-	
+
 }
 
 
@@ -23,7 +23,7 @@ nav ul {
     overflow: hidden;
     line-height: 3.0;
 }
-   
+
 nav li a {
     text-decoration: none;
     padding: 2em;
@@ -61,7 +61,8 @@ header, footer {
 	height:100%;
 	max-width: 300px;
 	max-height: 300px;
-	float: left;
+	/*float: left;*/
+	display: inline-block;
 	padding: 1em;
 }
 .gridItem img{
@@ -84,19 +85,25 @@ button {
 	width:100%;
 }
 
-form {
-	text-align: left;
-	display: inline-block;
-}
-form input{
 
-}
 #createAccountButton
 {
 
 }
+.cart{
+	align-content: center;
+	text-align: center;
+}
+.cartItem {
+	width:100%;
+	max-width: 400px;
+	margin: auto;
+	border: 1px solid black;
+	/*display: inline-block;*/
+}
 .cartItem *{
 	display: inline-block;
+	margin: 2px;
 }
 .cartItem h4{
 	display: block;
@@ -108,6 +115,12 @@ form input{
 	max-height: 50px;
 }
 
+.costDisplay {
+	margin-left: 3em;
+	float: right;
+	text-align: right;
+}
+
 
 #checkoutButton
 {
@@ -116,4 +129,92 @@ form input{
 	display: inline-block;
 	background-color: grey;
 	padding: 1em;
+	color: white;
+}
+
+form {
+	/*text-align: left;*/
+	display: inline-block;
+	/*width:100%;*/
+
+}
+form input{
+	width: 20em;
+	line-height: 2.0;
+}
+
+fieldset {
+
+	/*width: 100%;*/
+	text-align: center;
+}
+
+
+select {
+	width: 20em;
+	line-height: 2.0;
+	height: 3em;
+}
+
+.inputButton
+{
+	margin: 2em;
+}
+
+.popup
+{
+	position: fixed;
+	display: none;
+	top: 5%;
+	left: 25%;
+	width:50%;
+	z-index: 1002;
+	background: #999;
+}
+
+.popup img{
+	width: 80%;
+	height:80%;
+}
+.popupOverlay {
+  display: none;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 1001;
+  -moz-opacity: 0.8;
+  opacity: .80;
+  filter: alpha(opacity=80);
+}
+
+.clickable
+{
+	cursor: pointer;
+	-moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
+
+img 
+{
+	-moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
 }

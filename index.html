@@ -11,63 +11,382 @@
 <div id="container">
 	<header>
 		<h1>Triangle Food Service</h1>
-	
+
 	<nav>
 		<ul class = "tabs">
 			<li><a href="#">Home</a></li>
 			<li><a href="./signin.html">Sign in</a></li>
-			<li><a href="./cart.html">Cart: $0.00</a></li>
+			<li><a href="./cart.html">Cart: <span id="cartTotal">$0.00</span></a></li>
 		</ul>
 	</nav>
 	</header>
 
-	
 
-	<div menu>
-		<div class = "gridItem">
-			<h3>Triangular Chip</h3>
+
+	<div id="menu">
+		<!-- <div class = "gridItem">
+			<h3>Triangular Cheese Chip</h3>
 			<img src = "./images/dorito.png"/><br>
-			<button class="addButton">Order Now</button>
-
+			<button class="addButton" id="item1Button" name = "1">Order Now</button><br>
+			
 		</div>
 		<div class = "gridItem">
 			<h3>Triangular Watermelon</h3>
 			<img src = "./images/watermelon.jpg"/><br>
-			<button class="addButton">Order Now</button>
+			<button class="addButton" id="item2Button" name = "2">Order Now</button>
 		</div>
 		<div class = "gridItem">
 			<h3>Triangular Pizza</h3>
 			<a>
 			<img src = "./images/pizza.jpg"/></a><br>
-			<button class="addButton">Order Now</button>
+			<button class="addButton" id="item3Button" name = "3">Order Now</button>
 		</div>
 		<div class = "gridItem">
 			<h3>Triangular Pie</h3>
 			<img src = "./images/pie.jpg"/><br>
-			<button class="addButton">Order Now</button>
+			<button class="addButton" id="item4Button" name = "4">Order Now</button>
 
 		</div>
 		<div class = "gridItem">
-			<h3>Triangular Onigiri</h3>
+			<h3>Triangular Rice Ball</h3>
 			<img src = "./images/onigiri.png"/><br>
-			<button class="addButton">Order Now</button>
+			<button class="addButton" id="item5Button" name = "5">Order Now</button>
 		</div>
 		<div class = "gridItem">
 			<h3>Triangular Cake</h3>
 			<a>
 			<img src = "./images/cake.jpg"/></a><br>
-			<button class="addButton">Order Now</button>
-		</div>
+			<button class="addButton" id="item6Button" name = "6">Order Now</button>
+		</div> -->
 	</div>
 
-	<div class = "popup" hidden=true>
-		<h3>Food Name</h3>
-		<p>Price: $1.00</p>
-		<button>Add to Cart</button>
+	<div id = "popups">
+		<!-- <div class = "popup" id = "item1_info" >
+			<h4>Triangular Cheese Chip</h4>
+			<img src="./images/dorito.png">
+			<p>This is a chip</p>
+			<p>Price: $1.00</p>
+			<button class = "addToCartButton" name = "1">Add to Cart</button>
+			<button class = "closePopup">Close</button>
+		</div>
+		<div class = "popup" id = "item2_info" >
+			<h4>Triangular Watermelon</h4>
+			<img src="./images/watermelon.jpg">
+			<p>This is a watermelon slice</p>
+			<p>Price: $2.00</p>
+			<button class = "addToCartButton" name = "2">Add to Cart</button>
+			<button class = "closePopup">Close</button>
+		</div>
+		<div class = "popup" id = "item3_info" >
+			<h4>Triangular Pizza</h4>
+			<img src="./images/pizza.jpg">
+			<p>This is a Pizza Slice</p>
+			<p>Price: $3.00</p>
+			<button class = "addToCartButton" name = "3">Add to Cart</button>
+			<button class = "closePopup">Close</button>
+		</div>
+		<div class = "popup" id = "item4_info" >
+			<h4>Triangular Pie</h4>
+			<img src="./images/pie.jpg">
+			<p>This is a Pie Slice</p>
+			<p>Price: $4.00</p>
+			<button class = "addToCartButton" name = "4">Add to Cart</button>
+			<button class = "closePopup">Close</button>
+		</div>
+		<div class = "popup" id = "item5_info" >
+			<h4>Triangular Rice Ball</h4>
+			<img src="./images/onigiri.png">
+			<p>This is an onigiri</p>
+			<p>Price: $5.00</p>
+			<button class = "addToCartButton" name = "5">Add to Cart</button>
+			<button class = "closePopup">Close</button>
+		</div>
+		<div class = "popup" id = "item6_info" >
+			<h4>Triangular Cake</h4>
+			<img src="./images/cake.jpg">
+			<p>This is a cake slice</p>
+			<p>Price: $6.00</p>
+			<button class = "addToCartButton" name = "6">Add to Cart</button>
+			<button class = "closePopup">Close</button>
+		</div> -->
+	</div>
+
+	<div class = "popupOverlay">
 	</div>
 
 	<footer>Copyright &copy; Brian Dizon</footer>
 </div>
 
+
+<script type="text/javascript">
+
+	
+	var itemDatas = [
+		{
+			name: "Triangular Cheese Chip",
+			img: "./images/dorito.png",
+			price: 1,
+			details: "This is a chip"
+		},
+		{
+			name: "Triangular Watermelon",
+			img: "./images/watermelon.jpg",
+			price: 2,
+			details: "this is a watermelon slice"
+		},
+		{
+			name: "Triangular Pizza Slice",
+			img: "./images/pizza.jpg",
+			price: 3,
+			details: "This is a pizza slice"
+		},
+		{
+			name: "Triangular Pie Slice",
+			img: "./images/pie.jpg",
+			price: 4,
+			details: "This is a pie slice"
+		},
+		{
+			name: "Triangular Rice Ball",
+			img: "./images/onigiri.png",
+			price: 5,
+			details: "This is an onigiri"
+		},
+		{
+			name: "Triangular Cake Slice",
+			img: "./images/cake.jpg",
+			price: 6,
+			details: "This is a cake slice"
+		},
+	];
+	
+	var cart = [0,0,0,0,0,0];
+	var prices = [1,2,3,4,5,6];
+	var cartTotal = 0;
+	var cartTotalDisplay = document.getElementById("cartTotal");
+	var popupOverlay = document.querySelector(".popupOverlay");
+	var currentPopup;
+
+
+	var menuDiv = document.getElementById("menu");
+	var popupsDiv = document.getElementById("popups");
+
+	function priceString(value)
+	{
+		return "$" + value + ".00";
+	}
+	function cartToString()
+	{
+		var result = "[";
+		for(var i =0;i<cart.length;i++)
+		{
+			result += cart[i]+",";
+		}
+		result += "]";
+		return result;
+	}
+	function addIndexToCart(index)
+	{
+		cart[index] ++;
+		cartTotal += prices[index];
+		cartTotalDisplay.innerHTML = priceString(cartTotal);
+		localStorage.setItem("cart", cartToString());
+		localStorage.setItem("totalPrice", cartTotal);
+	}
+
+	if (typeof(Storage) !== "undefined") {
+		var cartString = localStorage.getItem("cart");
+		var quantityStrings = ["","","","","",""];
+		var index = 0;
+		for(var i =1;i<cartString.length-1;i++)
+		{
+			if(cartString[i]==",")
+			{
+				index++;continue;
+			}
+			quantityStrings[index] += cartString[i];
+		}
+		var quantityInts = [];
+		for(var i=0;i<quantityStrings.length;i++)
+		{
+			quantityInts[i] = parseInt(quantityStrings[i]);
+		}
+		console.log(quantityInts);
+		for(var i=0;i<quantityInts.length;i++)
+		{
+			cartTotal += itemDatas[i].price * quantityInts[i];
+		}
+		console.log(cartTotal);
+		cartTotalDisplay.innerHTML = priceString(cartTotal);
+		cart=quantityInts;
+	} else {
+
+	}
+
+	// for(var i =1;i<=6;i++)
+	// {
+	// 	var name = "item"+i+"Button";
+	// 	var infoName = name+"_info";
+	// 	document.getElementById(name).addEventListener("click", function()
+	// 	{
+	// 		document.getElementById(infoName).style.display="block";
+	// 	});
+	// 	// document.getElementById(name).onclick = function()
+	// 	// {
+	// 	// 	document.getElementById(infoName).hidden=false;
+	// 	// }
+
+	// }
+	popupOverlay.addEventListener("click", function()
+	{
+		currentPopup.style.display="none";
+		this.style.display="none";
+	});
+	var popups = [];
+	// var popups = document.querySelectorAll(".popup");
+	{
+		var addButtons = document.querySelectorAll(".addButton");
+		
+		for(var i =0;i<addButtons.length&&i<popups.length;i++)
+		{
+			addButtons[i].addEventListener("click", function()
+			{
+				popups[this.name-1].style.display="block";
+				popupOverlay.style.display="block";
+				currentPopup = popups[this.name-1];
+			})
+		}
+	}
+
+	// document.getElementById("item1Button").onclick = function(){
+	// 	document.getElementById("item1_info").style.display="block";
+	// }
+
+	{
+		var closeButtons = document.querySelectorAll(".closePopup");
+		for(var i =0;i<closeButtons.length;i++)
+		{
+			var b = closeButtons[i];
+			b.addEventListener("click",function()
+			{
+				this.parentElement.style.display="none";
+				popupOverlay.style.display="none";
+			});
+		}
+
+		var addButtons = document.querySelectorAll(".addToCartButton");
+		for(var i=0;i<addButtons.length;i++)
+		{
+			var b = addButtons[i];
+			b.addEventListener("click", function()
+			{
+				addIndexToCart(this.name-1);
+				this.parentElement.style.display="none";
+				popupOverlay.style.display="none";
+			});
+		}
+	}
+
+	function dynamicLoad()
+	{
+		for(var i =0;i<itemDatas.length;i++)
+		{
+			dynamicAdd(i);
+		}
+	}
+	dynamicLoad();
+	function dynamicAdd(index)
+	{
+		var item = itemDatas[index];
+		var gridItem = document.createElement("div");
+		gridItem.className = "gridItem";
+		{
+			var title = document.createElement("H3");
+			title.innerHTML=item.name;
+			var img = document.createElement("img");
+			img.src= item.img;
+			var orderButton = document.createElement("button");
+			orderButton.className="addButton";
+			orderButton.id = "item"+(index)+"Button";
+			orderButton.name = index;
+			orderButton.innerHTML="Order Now";
+
+			gridItem.appendChild(title);
+			gridItem.appendChild(img);
+			gridItem.appendChild(document.createElement("br"));
+			gridItem.appendChild(orderButton);
+			gridItem.appendChild(document.createElement("br"));
+
+			orderButton.addEventListener("click",function()
+			{
+				popups[this.name].style.display="block";
+				popupOverlay.style.display="block";
+				currentPopup = popups[this.name];
+			});
+		}
+		menuDiv.appendChild(gridItem);
+
+		var popup = document.createElement("div");
+		popup.className="popup";
+		popup.id = "item"+index + "_info";
+		{
+			var title = document.createElement("H4");
+			title.innerHTML=item.name;
+			var img = document.createElement("img");
+			img.src = item.img;
+			var desc = document.createElement("p");
+			desc.innerHTML=item.details;
+			var price = document.createElement("p");
+			price.innerHTML="Price: "+priceString(item.price);
+			var cartButton = document.createElement("button");
+			cartButton.className = "addToCartButton";
+			cartButton.name = index;
+			cartButton.innerHTML = "Add to Cart";
+			var closeButton = document.createElement("button");
+			closeButton.className="closePopup";
+			closeButton.innerHTML="Close";
+
+			popup.appendChild(title);
+			popup.appendChild(img);
+			popup.appendChild(desc);
+			popup.appendChild(price);
+			popup.appendChild(cartButton);
+			popup.appendChild(closeButton);
+
+			closeButton.addEventListener("click",function()
+			{
+				this.parentElement.style.display="none";
+				popupOverlay.style.display="none";
+			});
+			cartButton.addEventListener("click", function()
+			{
+				addIndexToCart(this.name-1);
+				this.parentElement.style.display="none";
+				popupOverlay.style.display="none";
+			});
+		}
+		popupsDiv.appendChild(popup);
+		popups.push(popup);
+		/*
+		<div class = "gridItem">
+			<h3>Triangular Cheese Chip</h3>
+			<img src = "./images/dorito.png"/><br>
+			<button class="addButton" id="item1Button" name = "1">Order Now</button><br>
+			
+		</div>
+
+		<div class = "popup" id = "item1_info" >
+			<h4>Triangular Cheese Chip</h4>
+			<img src="./images/dorito.png">
+			<p>This is a chip</p>
+			<p>Price: $1.00</p>
+			<button class = "addToCartButton" name = "1">Add to Cart</button>
+			<button class = "closePopup">Close</button>
+		</div>
+		//*/
+	}
+
+
+</script>
 </body>
 </html>

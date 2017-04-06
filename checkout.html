@@ -14,7 +14,7 @@
 	<nav>
 		<ul class = "tabs">
 			<li><a href="./index.html">Home</a></li>
-			<li><a href="#">Sign in</a></li>
+			<li><a href="./signin.html">Sign in</a></li>
 			<li><a href="./cart.html">Cart: $0.00</a></li>
 		</ul>
 	</nav>
@@ -34,21 +34,60 @@
 			Phone:<br>
 			<input type="text" name="securitycode"><br>
 		</fieldset>
+		<fieldset>
+			<legend>Delivery Address</legend>
+			Country:<br>
+			<input type="text" name="country"><br>
+			Street Address:<br>
+			<input type="text" name="address"><br>
+			Apt / Ste / Floor:<br>
+			<input type="text" name="apt"><br>
+			Zip Code:<br>
+			<input type="text" name="zipcode"><br>
 
+		</fieldset>
 		<fieldset>
 			<legend>Payment Info</legend>
+			<label>Payment Type</label> <br>
+			<select>
+				<option value = "credit">Credit</option>
+				<option value = "cash">Cash</option>
+			</select><br>
 			Card Number:<br>
 			<input type="text" name="cardnumber"><br>
 			Security Code:<br>
 			<input type="text" name="securitycode"><br>
 			Expiration Date:<br>
 			<input type="text" name="cardnumber"><br>
+			<!-- <select>
+				<option value="01">01 - January</option>
+				<option value="02">02 - February</option>
+				<option value="03">03 - March</option>
+				<option value="04">04 - April</option>
+				<option value="05">05 - May</option>
+				<option value="06">06 - June</option>
+				<option value="07">07 - July</option>
+				<option value="08">08 - August</option>
+				<option value="09">09 - September</option>
+				<option value="10">10 - October</option>
+				<option value="11">11 - November</option>
+				<option value="12">12 - December</option>
+			</select><br> -->
 			Name on Card:<br>
 			<input type="text" name="securitycode"><br>
 			Zip Code:<br>
 			<input type="text" name="cardnumber"><br>
 		</fieldset>
+<!-- 
+		<input type = "submit" value="submit"> -->
 	</form>
+
+	<div>
+		<h3>Total:</h3>
+		<p>$2.00</p>
+	</div>
+
+	<button>Pay Now</button>
 
 	<footer>Copyright &copy; Brian Dizon</footer>
 </div>
