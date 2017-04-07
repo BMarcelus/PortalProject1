@@ -192,7 +192,8 @@
 
 	if (typeof(Storage) !== "undefined") {
 		var cartString = localStorage.getItem("cart");
-		var quantityStrings = ["","","","","",""];
+		var quantityStrings = [];
+		for(var i=0;i<itemDatas.length;i++)quantityStrings[i]="";
 		var index = 0;
 		for(var i =1;i<cartString.length-1;i++)
 		{
