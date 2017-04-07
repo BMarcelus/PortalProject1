@@ -20,29 +20,109 @@
 	</nav>
 	</header>
 	<h3>Sign In</h3>
-	<form>
+	<form id = "signinForm">
 		<label>Email:</label><br>
-		<input type="text" name="email"><br>
+		<input type="text" name="email">
+		<p class="errorMessage" id="signinEmailMissing">* Valid Email Required</p>
+		<br>
 		<label>Password:</label><br>
-		<input type="password" name="password"><br>
-		<input class = "inputButton" type="submit" value="Sign In">
+		<input type="password" name="password">
+		<p class="errorMessage" id="signinPasswordMissing">* Password Required</p><br>
+		<input class = "inputButton" id="signinButton" type="submit" value="Sign In">
 	</form>
 
 	<h3>Create An Account</h3>
-	<form>
+	<form id = "registerForm">
 		<label for="firstname">First Name:</label><br>
-		<input type="text" name="firstname"><br>
+		<input type="text" name="firstname">
+		<p class="errorMessage" id="registerNameMissing">* Field Required</p><br>
 		<label>Last Name:</label><br>
-		<input type="text" name="lastname"><br>
+		<input type="text" name="lastname">
+		<p class="errorMessage" id="registerLastNameMissing">* Field Required</p><br>
 		<label>Email:</label><br>
-		<input type="text" name="email"><br>
+		<input type="text" name="email">
+		<p class="errorMessage" id="registerEmailMissing">* Valid Email Required</p><br>
 		<label>Password:</label><br>
-		<input type="password" name="password"><br>
+		<input type="password" name="password">
+		<p class="errorMessage" id="registerPasswordMissing">* Password Required</p><br>
 		<input class = "inputButton" id="createAccountButton" type="submit" value="Create Account">
 	</form>
 
 	<footer>Copyright &copy; Brian Dizon</footer>
 </div>
+
+<script type="text/javascript">
+
+var signinEmail = document.querySelector("#signinForm input[name=email]");
+var signinPassword = document.querySelector("#signinForm input[name=password]");
+var signinEmailError = document.querySelector("#signinEmailMissing");
+var signinPasswordError = document.querySelector("#signinPasswordMissing");
+
+var registerName = document.querySelector("#registerForm input[name=firstname]");
+var registerLastName = document.querySelector("#registerForm input[name=lastname]");
+var registerEmail = document.querySelector("#registerForm input[name=email]");
+var registerPassword = document.querySelector("#registerForm input[name=password]");
+
+var registerNameError = document.querySelector("#registerNameMissing");
+var registerLastNameError = document.querySelector("#registerLastNameMissing");
+var registerEmailError = document.querySelector("#registerEmailMissing");
+var registerPasswordError = document.querySelector("#registerPasswordMissing");
+
+
+document.getElementById("signinButton").addEventListener("click", function(e)
+{
+	signinPasswordError.style.display="none";
+	signinEmailError.style.display="none";
+	if(signinEmail.value == "" || signinEmail.value.indexOf("@")==-1 || signinEmail.value.indexOf(".")==-1)
+	{
+		e.preventDefault();
+		signinEmailError.style.display = "block";
+	}
+	if(signinPassword.value == "")
+	{
+		e.preventDefault();
+		signinPasswordError.style.display = "block";
+	}
+
+});
+
+document.getElementById("createAccountButton").addEventListener("click", function(e)
+{
+	registerNameError.style.display="none";
+	registerLastNameError.style.display="none";
+	registerEmailError.style.display="none";
+	registerPasswordError.style.display="none";
+	if(registerName.value == "")
+	{
+		e.preventDefault();
+		registerNameError.style.display = "block";
+	}
+	if(registerLastName.value == "")
+	{
+		e.preventDefault();
+		registerLastNameError.style.display = "block";
+	}
+	if(registerEmail.value == "" || registerEmail.value.indexOf("@")==-1 || registerEmail.value.indexOf(".")==-1)
+	{
+		e.preventDefault();
+		registerEmailError.style.display = "block";
+	}
+	if(registerPassword.value == "")
+	{
+		e.preventDefault();
+		registerPasswordError.style.display = "block";
+	}
+});
+
+if (typeof(Storage) !== "undefined") {
+		var totalPrice = localStorage.getItem("totalPrice");
+		document.getElementById("cartTotal").innerHTML = totalPrice;
+	} else {
+
+	}
+
+
+</script>
 
 </body>
 </html>

@@ -123,36 +123,42 @@
 	
 	var itemDatas = [
 		{
+			id: 0,
 			name: "Triangular Cheese Chip",
 			img: "./images/dorito.png",
 			price: 1,
 			details: "This is a chip"
 		},
 		{
+			id: 1,
 			name: "Triangular Watermelon",
 			img: "./images/watermelon.jpg",
 			price: 2,
 			details: "this is a watermelon slice"
 		},
 		{
+			id: 2,
 			name: "Triangular Pizza Slice",
 			img: "./images/pizza.jpg",
 			price: 3,
 			details: "This is a pizza slice"
 		},
 		{
+			id: 3,
 			name: "Triangular Pie Slice",
 			img: "./images/pie.jpg",
 			price: 4,
 			details: "This is a pie slice"
 		},
 		{
+			id: 4,
 			name: "Triangular Rice Ball",
 			img: "./images/onigiri.png",
 			price: 5,
 			details: "This is an onigiri"
 		},
 		{
+			id: 5,
 			name: "Triangular Cake Slice",
 			img: "./images/cake.jpg",
 			price: 6,
@@ -194,7 +200,7 @@
 		cartTotal += itemDatas[index].price;
 		cartTotalDisplay.innerHTML = priceString(cartTotal);
 		localStorage.setItem("cart", cartToString());
-		localStorage.setItem("totalPrice", cartTotal);
+		localStorage.setItem("totalPrice", priceString(cartTotal));
 	}
 
 	if (typeof(Storage) !== "undefined") {

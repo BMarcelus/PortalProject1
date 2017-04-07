@@ -117,7 +117,7 @@
 	function saveData()
 	{
 		localStorage.setItem("cart", cartToString());
-		localStorage.setItem("totalPrice", totalPriceCount);
+		localStorage.setItem("totalPrice", priceString(totalPriceCount));
 	}
 
 	function removeParent()

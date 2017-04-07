@@ -166,8 +166,9 @@ select {
 	position: fixed;
 	display: none;
 	top: 5%;
-	left: 25%;
-	width:50%;
+	left: 38%;
+	/*margin: auto;*/
+	width:25%;
 	z-index: 1002;
 	background: #999;
 }
@@ -217,4 +218,11 @@ img
    */
    -ms-user-select: none;
    user-select: none;
+}
+
+.errorMessage
+{
+	color: red;
+	margin:0px;
+	display: none;
 }
