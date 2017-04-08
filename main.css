@@ -164,12 +164,12 @@ select {
 .popup
 {
 	position: fixed;
-	display: none;
+	/*display: none;*/
 	top: 5%;
 	left: 38%;
 	/*margin: auto;*/
 	width:25%;
-	z-index: 1002;
+	z-index: 3;
 	background: #999;
 }
 
@@ -178,14 +178,14 @@ select {
 	height:80%;
 }
 .popupOverlay {
-  display: none;
+	display: block;
   position: fixed;
   top: 0%;
   left: 0%;
   width: 100%;
   height: 100%;
   background-color: black;
-  z-index: 1001;
+  z-index: 2;
   -moz-opacity: 0.8;
   opacity: .80;
   filter: alpha(opacity=80);
@@ -224,5 +224,23 @@ img
 {
 	color: red;
 	margin:0px;
+	display: none;
+}
+
+
+
+#modal 
+{
+	position: fixed;
+	top: 5%;
+	left: 38%;
+	/*margin: auto;*/
+	width:25%;
+	z-index: 3;
+	background: #999;
+}
+
+.hide 
+{
 	display: none;
 }
