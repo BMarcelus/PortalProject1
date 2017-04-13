@@ -213,6 +213,7 @@ function patchCartItem(item)
 		    dataType : "json",
 		})
 		  .done(function( json ) {
+		  	
 		  })
 		  .fail(function( xhr, status, errorThrown ) {
 		    alert( "Sorry, there was a problem!" );
