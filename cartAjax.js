@@ -121,7 +121,7 @@ function dynamicLoad()
 	$.ajax({
  
 	    // The URL for the request
-	    url: "http://b5112808.ngrok.io/cart/brian",
+	    url: "http://thiman.me:1337/cart/brian",
 	 
 	    // The data to send (will be converted to a query string)
 	    // data: {
@@ -179,13 +179,13 @@ function deleteCartItem(item)
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://b5112808.ngrok.io/cart/brian/"+item._id,
+		    url: "http://thiman.me:1337/cart/brian/"+item._id,
 		 
 		    // Whether this is a POST or GET request
 		    type: "DELETE",
 		 
 		    // The type of data we expect back
-		    dataType : "json",
+		    // dataType : "json",
 		})
 		  .done(function( json ) {
 		  })
@@ -202,7 +202,7 @@ function patchCartItem(item)
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://b5112808.ngrok.io/cart/brian/"+item._id,
+		    url: "http://thiman.me:1337/cart/brian/"+item._id,
 		 
 		    data: item,
 		 

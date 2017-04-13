@@ -44,11 +44,12 @@
 // ];
 
 var itemDatas;
+var serverUrl = "http://thiman.me:1337";
 
 $.ajax({
  
     // The URL for the request
-    url: "http://b5112808.ngrok.io/menu/brian",
+    url: serverUrl+"/menu/brian",
  
     // The data to send (will be converted to a query string)
     // data: {

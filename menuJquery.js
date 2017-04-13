@@ -9,6 +9,9 @@
 	// 	.append(itemEle)
 	// 	.append(button);
 
+var serverUrl = "http://thiman.me:1337";
+
+
 	var cart = [];
 	var cartTotal = 0;
 	var cartTotalDisplay = document.getElementById("cartTotal");
@@ -47,7 +50,7 @@
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://b5112808.ngrok.io/cart/brian",
+		    url: "http://thiman.me:1337/cart/brian",
 		 
 		    data: item,
 		 
@@ -75,7 +78,7 @@
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://b5112808.ngrok.io/cart/brian/"+item._id,
+		    url: "http://thiman.me:1337/cart/brian/"+item._id,
 		 
 		    data: item,
 		 
@@ -201,7 +204,7 @@
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://b5112808.ngrok.io/cart/brian",
+		    url: "http://thiman.me:1337/cart/brian",
 		 
 		    // The data to send (will be converted to a query string)
 		    // data: {
