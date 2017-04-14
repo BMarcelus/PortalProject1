@@ -44,12 +44,13 @@
 // ];
 
 var itemDatas;
-var serverUrl = "http://thiman.me:1337";
+// var serverUrl = "http://thiman.me:1337";
+var serverUrl = "http://localHost:3000";
 
 $.ajax({
  
     // The URL for the request
-    url: serverUrl+"/menu/brian",
+    url: serverUrl+"/menu",
  
     // The data to send (will be converted to a query string)
     // data: {
@@ -79,7 +80,7 @@ $.ajax({
   })
   // Code to run regardless of success or failure;
   .always(function( xhr, status ) {
-    // alert( "The request is complete!" );
+    // alert( "The request is complete!" )
   });
 
 

@@ -9,7 +9,8 @@
 	// 	.append(itemEle)
 	// 	.append(button);
 
-var serverUrl = "http://thiman.me:1337";
+// var serverUrl = "http://thiman.me:1337";
+var serverUrl = "http://localHost:3000";
 
 
 	var cart = [];
@@ -50,7 +51,7 @@ var serverUrl = "http://thiman.me:1337";
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://thiman.me:1337/cart/brian",
+		    url: serverUrl + "/cart",// "http://thiman.me:1337/cart/brian",
 		 
 		    data: item,
 		 
@@ -63,6 +64,7 @@ var serverUrl = "http://thiman.me:1337";
 		// Code to run if the request succeeds (is done);
 		  // The response is passed to the function
 		  .done(function( json ) {
+		  	item._id = json._id;
 		  })
 		  // Code to run if the request fails; the raw request and
 		  // status codes are passed to the function
@@ -78,7 +80,7 @@ var serverUrl = "http://thiman.me:1337";
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://thiman.me:1337/cart/brian/"+item._id,
+		    url: serverUrl+"/cart/"+item._id,
 		 
 		    data: item,
 		 
@@ -107,7 +109,7 @@ var serverUrl = "http://thiman.me:1337";
 		for(var i =0;i<cart.length;i++)
 		{
 			var item = cart[i];
-			if(item._id ==id)
+			if(item.menuID ==id)
 			{
 				item.quantity++;
 				if(item.quantity==1)
@@ -173,6 +175,13 @@ var serverUrl = "http://thiman.me:1337";
 
 	var currentSelection = 0;
 
+	function findByMenuId(array, id)
+	{
+		for(var i =0;i<array.length;i++)
+		{
+			if(array[i].menuID == id)return array[i];
+		}
+	}
 	function findById(array, id)
 	{
 		for(var i =0;i<array.length;i++)
@@ -185,9 +194,10 @@ var serverUrl = "http://thiman.me:1337";
 	{
 		for(var i =0;i<json.length;i++)
 		{
-			var cartItem = findById(cart, json[i]._id);
+			var cartItem = findByMenuId(cart, json[i].menuID);
 			cartItem.quantity = json[i].quantity;
-			var item = findById(itemDatas, json[i]._id);
+			cartItem._id = json[i]._id;
+			var item = findById(itemDatas, json[i].menuID);
 			cartTotal += parseInt(item.price) * parseInt(cartItem.quantity);
 		}
 
@@ -199,12 +209,12 @@ var serverUrl = "http://thiman.me:1337";
 		for(var i =0;i<itemDatas.length;i++)
 		{
 			dynamicAdd(i);
-			cart[i]={_id:itemDatas[i]._id, quantity:0};
+			cart[i]={menuID:itemDatas[i]._id, quantity:0};
 		}
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://thiman.me:1337/cart/brian",
+		    url: serverUrl+"/cart",
 		 
 		    // The data to send (will be converted to a query string)
 		    // data: {

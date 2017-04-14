@@ -1,4 +1,5 @@
 
+	var serverUrl = "http://localHost:3000";
 	
 	function priceString(value)
 	{
@@ -32,7 +33,7 @@
 		// totalPriceCount-= itemDatas[this.name].price;
 		cart.removeChild(this.parentElement.parentElement);
 		var id = this.getAttribute("data-id");
-		var cartItem = findById(cartJson, id);
+		var cartItem = findByMenuId(cartJson, id);
 		var menuItem = findById(itemDatas, id);
 
 		totalPriceCount -= menuItem.price;
@@ -107,7 +108,7 @@
 
 		if(shouldUpdate)
 		{
-			var cartItem = findById(cartJson, id);
+			var cartItem = findByMenuId(cartJson, id);
 			cartItem.quantity = parseInt(cartItem.quantity)+1;
 			patchCartItem(cartItem);
 			// cartArray[index]++;
@@ -121,7 +122,7 @@ function dynamicLoad()
 	$.ajax({
  
 	    // The URL for the request
-	    url: "http://thiman.me:1337/cart/brian",
+	    url: serverUrl+"/cart",
 	 
 	    // The data to send (will be converted to a query string)
 	    // data: {
@@ -163,13 +164,19 @@ function findById(array, id)
 		if(array[i]._id == id)return array[i];
 	}
 }
-
+function findByMenuId(array, id)
+{
+	for(var i =0;i<array.length;i++)
+	{
+		if(array[i].menuID == id)return array[i];
+	}
+}
 function loadCart(json)
 {
 	for(var i =0;i<json.length;i++)
 	{
 		for(var j =0;j<json[i].quantity;j++)
-			addItem(json[i]._id);
+			addItem(json[i].menuID);
 	}
 }
 
@@ -179,13 +186,15 @@ function deleteCartItem(item)
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://thiman.me:1337/cart/brian/"+item._id,
+		    url: serverUrl+"/cart/"+item._id,
 		 
 		    // Whether this is a POST or GET request
 		    type: "DELETE",
 		 
 		    // The type of data we expect back
 		    // dataType : "json",
+		    contentType:'application/json',  // <---add this
+    		dataType: 'text',                // <---update this
 		})
 		  .done(function( json ) {
 		  })
@@ -202,7 +211,7 @@ function patchCartItem(item)
 		$.ajax({
 	 
 		    // The URL for the request
-		    url: "http://thiman.me:1337/cart/brian/"+item._id,
+		    url: serverUrl+"/cart/"+item._id,
 		 
 		    data: item,
 		 
@@ -213,7 +222,7 @@ function patchCartItem(item)
 		    dataType : "json",
 		})
 		  .done(function( json ) {
-		  	
+
 		  })
 		  .fail(function( xhr, status, errorThrown ) {
 		    alert( "Sorry, there was a problem!" );
