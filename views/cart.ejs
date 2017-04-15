@@ -7,28 +7,24 @@
   </head>
   <body>
   	<div id="container">
-	    <!-- <h1><%= title %></h1>
-	    <p>Welcome to <%= title %></p> -->
 	    <%- include('header.ejs',{cartTotal: cartTotal}); %>
 
-	    <div id="menu">
+	    <h3>Cart</h3>
+		<div class = "cart">
 		</div>
-
-		<div id="modal" class = "hide popup">
-				<h4></h4>
-				<img />
-				<p></p>
-				<button class = "addToCartButton">Add to Cart</button>
+		<br>
+		<div>
+			Total Price:
+			<span id="totalprice"><%= cartTotal%></span>
 		</div>
-
-		<div class = "popupOverlay hide">
-		</div>
+		<br>
+		<a id="checkoutButton" href="./checkout">Proceed to Checkout</a>
 
 	    <%- include('footer.ejs',{}); %>
 	</div>
 
 	<script src = "/itemDatas.js"></script>
 
-	<script type="text/javascript" src = "/menuJquery.js"></script>
+	<script type="text/javascript" src = "/cartAjax.js"></script>
   </body>
 </html>

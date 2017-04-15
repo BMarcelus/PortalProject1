@@ -1,58 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<title>Triangle Food Service</title>
-<link rel="stylesheet" type="text/css" href = "main.css">
-
-    <script language="javascript" src="./jquery-3.2.0.min.js" type="text/javascript"></script>
-</head>
-<body>
-<div id="container">
-	<header>
-		<h1>Triangle Food Service</h1>
-	
-	<nav>
-		<ul class = "tabs">
-			<li><a href="./index.html">Home</a></li>
-			<li><a href="#">Sign in</a></li>
-			<li><a href="./cart.html">Cart: <span id="cartTotal">$0.00</span></a></li>
-		</ul>
-	</nav>
-	</header>
-	<h3>Sign In</h3>
-	<form id = "signinForm">
-		<label>Email:</label><br>
-		<input type="text" name="email">
-		<p class="errorMessage" id="signinEmailMissing">* Valid Email Required</p>
-		<br>
-		<label>Password:</label><br>
-		<input type="password" name="password">
-		<p class="errorMessage" id="signinPasswordMissing">* Password Required</p><br>
-		<input class = "inputButton" id="signinButton" type="submit" value="Sign In">
-	</form>
-
-	<h3>Create An Account</h3>
-	<form id = "registerForm">
-		<label for="firstname">First Name:</label><br>
-		<input type="text" name="firstname">
-		<p class="errorMessage" id="registerNameMissing">* Field Required</p><br>
-		<label>Last Name:</label><br>
-		<input type="text" name="lastname">
-		<p class="errorMessage" id="registerLastNameMissing">* Field Required</p><br>
-		<label>Email:</label><br>
-		<input type="text" name="email">
-		<p class="errorMessage" id="registerEmailMissing">* Valid Email Required</p><br>
-		<label>Password:</label><br>
-		<input type="password" name="password">
-		<p class="errorMessage" id="registerPasswordMissing">* Password Required</p><br>
-		<input class = "inputButton" id="createAccountButton" type="submit" value="Create Account">
-	</form>
-
-	<footer>Copyright &copy; Brian Dizon</footer>
-</div>
-
-<script type="text/javascript">
 
 var signinEmail = document.querySelector("#signinForm input[name=email]");
 var signinPassword = document.querySelector("#signinForm input[name=password]");
@@ -183,15 +128,9 @@ document.getElementById("createAccountButton").addEventListener("click", functio
 	e.preventDefault();
 });
 
-if (typeof(Storage) !== "undefined") {
-		var totalPrice = localStorage.getItem("totalPrice");
-		document.getElementById("cartTotal").innerHTML = totalPrice;
-	} else {
+// if (typeof(Storage) !== "undefined") {
+// 		var totalPrice = localStorage.getItem("totalPrice");
+// 		document.getElementById("cartTotal").innerHTML = totalPrice;
+// 	} else {
 
-	}
-
-
-</script>
-
-</body>
-</html>
+// 	}

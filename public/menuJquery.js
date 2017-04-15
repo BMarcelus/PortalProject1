@@ -42,6 +42,7 @@ var serverUrl = "http://localHost:3000";
 		cart[index] ++;
 		cartTotal += itemDatas[index].price;
 		cartTotalDisplay.innerHTML = priceString(cartTotal);
+		// $("#cartTotal").html(priceString(cartTotal));
 		localStorage.setItem("cart", cartToString());
 		localStorage.setItem("totalPrice", priceString(cartTotal));
 	}
@@ -200,7 +201,7 @@ var serverUrl = "http://localHost:3000";
 			var item = findById(itemDatas, json[i].menuID);
 			cartTotal += parseInt(item.price) * parseInt(cartItem.quantity);
 		}
-
+		// $("#cartTotal").html(priceString(cartTotal));
 		cartTotalDisplay.innerHTML = priceString(cartTotal);
 	}
 
