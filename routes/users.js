@@ -78,7 +78,7 @@ router.post('/', function(req,res)
 				} else {
 					console.log(doc);
 					// doc.password="protected";
-					res.json(doc.toJson);
+					res.json(doc.toJson());
 				}
 			});
 		}
