@@ -6,6 +6,9 @@ var uuidV1 = require('uuid/v1');
 
 var CartModel = require("../models/cart");
 
+//ttl 
+//cronjob
+
 
 router.post('/', function(req,res)
 {
@@ -18,6 +21,7 @@ router.post('/', function(req,res)
 		var id = uuidV1();
 		console.log(id);
 		req.session.user = {_id: id, guest: true};
+		body.userID = ""+id;
 	}
 	var newCart = new CartModel(body);
 	newCart.save(function(err, doc)
@@ -66,9 +70,7 @@ router.delete('/:id', function(req,res){
 	});
 });
 
-/* GET home page. */
 router.get('/', function(req, res) {
-	// TODO: get all menu items
 	CartModel.find({userID: req.session.user._id}, function(err, docs)
 	{
 		if(err)
