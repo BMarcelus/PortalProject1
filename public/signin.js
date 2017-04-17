@@ -109,22 +109,26 @@ document.getElementById("createAccountButton").addEventListener("click", functio
 			dataType: 'json'
 		})
 		.done(function( json ) {
-	  	// console.log(json);f
-	  	// itemDatas = JSON.parse(json);
-	  	console.log(json);
-	  	if(json==[])
-	  	{
-	  		alert("email already registered");
-	  	}
-		  })
-		  // Code to run if the request fails; the raw request and
-		  // status codes are passed to the function
-		  .fail(function( xhr, status, errorThrown ) {
-		    alert( "Sorry, there was a problem!" );
-		    console.log( "Error: " + errorThrown );
-		    console.log( "Status: " + status );
-		    console.dir( xhr );
-		  });
+		  	// console.log(json);f
+		  	// itemDatas = JSON.parse(json);
+		  	console.log(json);
+		  	if(json==[])
+		  	{
+		  		alert("email already registered");
+		  	}
+		  	else
+		  	{
+		  		window.location = '/';
+		  	}
+	  })
+	  // Code to run if the request fails; the raw request and
+	  // status codes are passed to the function
+	  .fail(function( xhr, status, errorThrown ) {
+	    alert( "Sorry, there was a problem!" );
+	    console.log( "Error: " + errorThrown );
+	    console.log( "Status: " + status );
+	    console.dir( xhr );
+	  });
 	e.preventDefault();
 });
 

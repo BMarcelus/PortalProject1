@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var session = require('client-sessions');
 
 mongoose.connect('mongodb://localhost/onlineorders');
 
@@ -22,6 +23,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  cookieName: 'session',
+  secret: '3lKLRVHiF6zFBjvBk3J7KMgpF1gj7HEBHz30dTvg',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
 
 
 var index = require('./routes/index');
