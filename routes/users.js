@@ -59,6 +59,10 @@ router.post('/login/', function(req, res, next) {
 			if(user.comparePasswords(req.body.password.trim()))
 			{
 				console.log("logged in");
+				if(req.session.user)
+				{
+					
+				}
 				req.session.user = user.toJson();
 				res.json(user.toJson());
 			}else

@@ -9,4 +9,18 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Home-Triangle Food Service', cartTotal: "$0.00", user: req.session.user});
 });
 
+router.get('/checkout', function(req, res, next) {
+  res.render('checkout', { title: 'Cart-Triangle Food Service', cartTotal: "$0.00", user:req.session.user});
+});
+
+router.get('/cartpage', function(req, res, next) {
+  res.render('cart', { title: 'Cart-Triangle Food Service', cartTotal: "$0.00", user: req.session.user});
+});
+
+router.get('/signin', function(req, res, next) {
+	if(req.session.user&&!req.session.user.guest)
+	req.session.user=0;
+  res.render('signin', { title: 'Login-Triangle Food Service', cartTotal: "$0.00", user:req.session.user});
+});
+
 module.exports = router;

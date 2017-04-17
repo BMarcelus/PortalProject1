@@ -35,17 +35,11 @@ var index = require('./routes/index');
 var menu = require('./routes/menu');
 var cart = require('./routes/cart');
 var user = require('./routes/users');
-var cartPage = require('./routes/cartpage');
-var signin = require('./routes/signin');
-var checkout = require('./routes/checkout');
 
 app.use('/', index);
 app.use('/menu', menu);
 app.use('/cart', cart);
 app.use('/user', user)
-app.use('/cartpage', cartPage);
-app.use('/signin', signin);
-app.use('/checkout', checkout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
