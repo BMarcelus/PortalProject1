@@ -53,7 +53,10 @@ document.getElementById("signinButton").addEventListener("click", function(e)
 	  	{
 	  		alert("invalid login");
 	  	}
-	  	
+	  	else
+	  	{
+	 	 	window.location = '/';	
+	  	}
 	 })
 	 .fail(function( xhr, status, errorThrown ) {
 	    alert( "Sorry, there was a problem!" );

@@ -2,12 +2,23 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
+var uuidV1 = require('uuid/v1');
+
 var CartModel = require("../models/cart");
+
 
 router.post('/', function(req,res)
 {
 	var body = req.body;
-
+	if(req.session.user)
+		body.userID = req.session.user._id;
+	else
+	{
+		console.log("Guest User generating id");
+		var id = uuidV1();
+		console.log(id);
+		req.session.user = {_id: id, guest: true};
+	}
 	var newCart = new CartModel(body);
 	newCart.save(function(err, doc)
 	{
@@ -25,8 +36,6 @@ router.post('/', function(req,res)
 router.patch('/:objectId', function(req,res){
 	var body = req.body;
 	// console.log(req);
-	console.log("in patch");
-	console.log(req.params.objectId);
 	CartModel.findOneAndUpdate({_id: req.params.objectId}, body, function(err, doc){
 	    if (err)
 	    {
@@ -60,7 +69,7 @@ router.delete('/:id', function(req,res){
 /* GET home page. */
 router.get('/', function(req, res) {
 	// TODO: get all menu items
-	CartModel.find({}, function(err, docs)
+	CartModel.find({userID: req.session.user._id}, function(err, docs)
 	{
 		if(err)
 		{
