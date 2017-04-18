@@ -71,6 +71,10 @@ router.delete('/:id', function(req,res){
 });
 
 router.get('/', function(req, res) {
+	if(!req.session.user)
+	{
+		res.json([]);return;
+	}
 	CartModel.find({userID: req.session.user._id}, function(err, docs)
 	{
 		if(err)
