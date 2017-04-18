@@ -1,0 +1,48 @@
+{ 
+    "_id" : ObjectId("58eede0ce3526011426735ec"), 
+    "name" : "Triangular Cheese Chip", 
+    "details" : "This is a chip", 
+    "price" : NumberInt(1), 
+    "img" : "./images/dorito.png", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58eee30402f54f116fce2845"), 
+    "name" : "Triangular Watermelon", 
+    "details" : "This is a watermelon slice", 
+    "price" : NumberInt(2), 
+    "img" : "./images/watermelon.jpg", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58eee38002f54f116fce2846"), 
+    "name" : "Triangular Pizza Slice", 
+    "details" : "This is a pizza slice", 
+    "price" : NumberInt(3), 
+    "img" : "./images/pizza.jpg", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58eee38a02f54f116fce2847"), 
+    "name" : "Triangular Pie Slice", 
+    "details" : "This is a pie slice", 
+    "price" : NumberInt(4), 
+    "img" : "./images/pie.jpg", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58eee3a002f54f116fce2848"), 
+    "name" : "Triangular Rice Ball", 
+    "details" : "This is an onigiri", 
+    "price" : NumberInt(5), 
+    "img" : "./images/onigiri.png", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58eee3b202f54f116fce2849"), 
+    "name" : "Triangular Cake Slice", 
+    "details" : "This is a cake slice", 
+    "price" : NumberInt(6), 
+    "img" : "./images/cake.jpg", 
+    "__v" : NumberInt(0)
+}

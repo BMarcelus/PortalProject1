@@ -1,0 +1,16 @@
+{ 
+    "_id" : ObjectId("58f521e4b37ed423b0655d60"), 
+    "password" : "$2a$10$ZDf.vw0ICtaWxFPJWtGmy.p0q08HkqmhLg87FUq.R3Grkny1trcUq", 
+    "email" : "A@a.aa", 
+    "firstname" : "a", 
+    "lastname" : "a", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58f521f0b37ed423b0655d62"), 
+    "password" : "$2a$10$/XSlWmQr6ynQrsCNHoQ8auGbEfKsTvyesuBv5aPkOoYaaJ724c1yO", 
+    "email" : "b@b.b", 
+    "firstname" : "b", 
+    "lastname" : "b", 
+    "__v" : NumberInt(0)
+}
