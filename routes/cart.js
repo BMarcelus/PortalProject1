@@ -13,78 +13,47 @@ var CartModel = require("../models/cart");
 router.post('/', function(req,res)
 {
 	var body = req.body;
-	if(req.session.user)
-		body.userID = req.session.user._id;
-	else
-	{
-		console.log("Guest User generating id");
-		var id = uuidV1();
-		console.log(id);
-		req.session.user = {_id: id, guest: true};
-		body.userID = ""+id;
+	if(!req.session.user)req.session.user = {_id: uuidV1(), guest: true};
+	var userID = req.session.user._id;
+	var totalPrice=parseInt(body.totalPrice); 
+	req.session.user.totalPrice = totalPrice;
+	body.userID=userID;
+	var items= body.items;
+	var cartBody = {
+		userID,
+		items,
+		totalPrice
 	}
-	var newCart = new CartModel(body);
-	newCart.save(function(err, doc)
-	{
-		if(err)
-		{
-			console.log(err);
+	CartModel
+		.findOneAndUpdate({ userID }, cartBody, {upsert: true, new:true})
+		.then(function(updatedCart)		{
+			if(updatedCart)			{
+				res.json(updatedCart);
+			}
+			else
+				res.json([]);
+		})
+		.catch(function(err){
 			res.send(err);
-		} else {
-			console.log(doc);
-			res.json(doc);
-		}
-	});
-});
-
-router.patch('/:objectId', function(req,res){
-	var body = req.body;
-	// console.log(req);
-	CartModel.findOneAndUpdate({_id: req.params.objectId}, body, function(err, doc){
-	    if (err)
-	    {
-	    	console.log(err);
-	     	res.send(err);
-	    }
-	    else
-	    {
-			console.log(doc);
-			res.json(doc);
-			// res.send("a");	
-	    }
-	});
-});
-
-router.delete('/:id', function(req,res){
-	var body = req.body;
-	CartModel.findOneAndRemove({ _id: req.params.id}, function(err,doc) {
-    if (!err) {
-    	console.log(err);
-    	res.send(err);	
-    }
-    else {
-    	console.log(doc);
-    	// res.json([]);
-    	res.send("a");
-    }
-	});
+		});
 });
 
 router.get('/', function(req, res) {
-	if(!req.session.user)
-	{
-		res.json([]);return;
+	if(!req.session.user){
+		res.json({});
+		return;
 	}
-	CartModel.find({userID: req.session.user._id}, function(err, docs)
-	{
-		if(err)
-		{
+	CartModel.findOne({userID: req.session.user._id}, function(err, cart){
+		if(err)		{
 			console.log(err);
 			res.send(err);
 		}
-		else 
-		{
-			res.json(docs);
+		else {
+			if(cart)
+				res.json(cart);
+			else {
+				res.json({});
+			}
 		}
 	});
 });

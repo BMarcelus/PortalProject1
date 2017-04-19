@@ -9,23 +9,21 @@ router.post('/', function(req,res)
 	var body = req.body;
 
 	var newMenu = new MenuModel(body);
-	newMenu.save(function(err, doc)
+	newMenu.save(function(err, menu)
 	{
 		if(err)
 		{
 			console.log(err);
 			res.send(err);
 		} else {
-			console.log(doc);
-			res.json(doc);
+			res.json(menu);
 		}
 	});
 });
 
 /* GET home page. */
 router.get('/', function(req, res) {
-	// TODO: get all menu items
-	MenuModel.find({}, function(err, docs)
+	MenuModel.find({}, function(err, menu)
 	{
 		if(err)
 		{
@@ -34,7 +32,7 @@ router.get('/', function(req, res) {
 		}
 		else 
 		{
-			res.json(docs);
+			res.json(menu);
 		}
 	});
 });

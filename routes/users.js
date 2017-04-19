@@ -15,7 +15,6 @@ router.post('/', function(req,res)
 		}
 		else
 		{
-			// body.password=hashPassword(body.password,body.salt);
 			var newUser = new UserModel(
 				{
 					password: UserModel.hashPassword(body.password),
@@ -30,10 +29,7 @@ router.post('/', function(req,res)
 					console.log(err);
 					res.send(err);
 				} else {
-					console.log(user);
-					// doc.password="protected";
 					req.session.user = user.toJson();
-					console.log(req.session);
 					res.json(user.toJson());
 				}
 			});
@@ -42,9 +38,7 @@ router.post('/', function(req,res)
 	
 });
 
-/* GET users listing. */
 router.post('/login/', function(req, res, next) {
-	console.log(req.body);
 	UserModel.findOne({email: req.body.email.trim()}, function(err, user)
 	{
 		if(err)
@@ -54,20 +48,16 @@ router.post('/login/', function(req, res, next) {
 		}
 		else if(user)
 		{
-			console.log(user);
-			// if(doc.password == hashPassword(req.body.password.trim(), us.salt))
 			if(user.comparePasswords(req.body.password.trim()))
 			{
-				console.log("logged in");
 				if(req.session.user)
 				{
-					
+
 				}
 				req.session.user = user.toJson();
 				res.json(user.toJson());
 			}else
 			res.json([]);
-			// res.status(401).json("invalid credentials");
 		}
 		else
 		{

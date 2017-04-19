@@ -1,0 +1,42 @@
+{ 
+    "_id" : ObjectId("58f552e94dd580252f476126"), 
+    "menuID" : "58eee38a02f54f116fce2847", 
+    "quantity" : NumberInt(1), 
+    "userID" : "58f521e4b37ed423b0655d60", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58f552ed4dd580252f476127"), 
+    "menuID" : "58eee30402f54f116fce2845", 
+    "quantity" : NumberInt(1), 
+    "userID" : "89d289f0-23c7-11e7-9444-9302ace38491", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58f552f14dd580252f476128"), 
+    "menuID" : "58eee38002f54f116fce2846", 
+    "quantity" : NumberInt(1), 
+    "userID" : "89d289f0-23c7-11e7-9444-9302ace38491", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58f554ce9b4981256954390d"), 
+    "menuID" : "58eee30402f54f116fce2845", 
+    "quantity" : NumberInt(1), 
+    "userID" : "a8b82040-23c8-11e7-be3a-2d93bfd8db4a", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58f554df9b4981256954390e"), 
+    "menuID" : "58eee3a002f54f116fce2848", 
+    "quantity" : NumberInt(1), 
+    "userID" : "b2c202e0-23c8-11e7-be3a-2d93bfd8db4a", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("58f554e29b4981256954390f"), 
+    "menuID" : "58eee38002f54f116fce2846", 
+    "quantity" : NumberInt(1), 
+    "userID" : "b2c202e0-23c8-11e7-be3a-2d93bfd8db4a", 
+    "__v" : NumberInt(0)
+}

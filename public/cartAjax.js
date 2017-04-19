@@ -12,45 +12,25 @@
 	var totalPriceDisplay = document.getElementById("totalprice");
 	var cartTotalDisplay = document.getElementById("cartTotal");
 
-	function cartToString()
-	{
-		var result = "[";
-		for(var i =0;i<cartArray.length;i++)
-		{
-			result += cartArray[i]+",";
-		}
-		result += "]";
-		return result;
-	}
-
-	function saveData()
-	{
-
-	}
+	var cartItems = [];
+	var wholeCartObject = {};
 
 	function removeParent()
 	{
-		// totalPriceCount-= itemDatas[this.name].price;
 		cart.removeChild(this.parentElement.parentElement);
 		var id = this.getAttribute("data-id");
-		var cartItem = findByMenuId(cartJson, id);
+		var cartItem = findByMenuId(cartItems, id);
 		var menuItem = findById(itemDatas, id);
 
 		totalPriceCount -= menuItem.price;
 
 		cartItem.quantity = parseInt(cartItem.quantity) - 1;
-		if(cartItem.quantity==0)
-		{
-			deleteCartItem(cartItem);
-		}
-		else
-		{
-			patchCartItem(cartItem);
-		}
 
 		totalPriceDisplay.innerHTML = priceString(totalPriceCount);
 		cartTotalDisplay.innerHTML = priceString(totalPriceCount);
-		saveData();
+
+		wholeCartObject.totalPrice = totalPriceCount;
+		postWholeCart();
 	}
 
 
@@ -65,7 +45,6 @@
 		var div2 = document.createElement('div');
 		var title = document.createElement("H4");
 		title.innerHTML = item.name;
-		// title.appendChild(document.createTextNode(itemDatas[i].name));
 		var remove = document.createElement('a');
 		remove.innerHTML="remove";
 		remove.className = "clickable";
@@ -108,52 +87,29 @@
 
 		if(shouldUpdate)
 		{
-			var cartItem = findByMenuId(cartJson, id);
+			var cartItem = findByMenuId(cartItems, id);
 			cartItem.quantity = parseInt(cartItem.quantity)+1;
-			patchCartItem(cartItem);
-			// cartArray[index]++;
-			// saveData();
+			wholeCartObject.totalPrice = totalPriceCount;
+			postWholeCart();
 		}
 	}
-var cartJson;
 
 function dynamicLoad()
 {
 	$.ajax({
- 
-	    // The URL for the request
 	    url: serverUrl+"/cart",
-	 
-	    // The data to send (will be converted to a query string)
-	    // data: {
-	    // },
-	 
-	    // Whether this is a POST or GET request
 	    type: "GET",
-	 
-	    // The type of data we expect back
 	    dataType : "json",
 	})
-	// Code to run if the request succeeds (is done);
-	  // The response is passed to the function
 	  .done(function( json ) {
-	  	// console.log(json);
-	  	// itemDatas = JSON.parse(json);
-	  	cartJson = json;
 	  	loadCart(json);
 	  })
-	  // Code to run if the request fails; the raw request and
-	  // status codes are passed to the function
 	  .fail(function( xhr, status, errorThrown ) {
 	    alert( "Sorry, there was a problem!" );
 	    console.log( "Error: " + errorThrown );
 	    console.log( "Status: " + status );
 	    console.dir( xhr );
 	  })
-	  // Code to run regardless of success or failure;
-	  .always(function( xhr, status ) {
-	    // alert( "The request is complete!" );
-	  });
 }
 
 
@@ -173,61 +129,42 @@ function findByMenuId(array, id)
 }
 function loadCart(json)
 {
-	for(var i =0;i<json.length;i++)
+	wholeCartObject=json;
+	if(!wholeCartObject||!wholeCartObject.items)
+		wholeCartObject.items=[];
+	cartItems = wholeCartObject.items;
+	for(var i =0;i<cartItems.length;i++)
 	{
-		for(var j =0;j<json[i].quantity;j++)
-			addItem(json[i].menuID);
+		for(var j =0;j<cartItems[i].quantity;j++)
+			addItem(cartItems[i].menuID);
 	}
 }
-
-
-function deleteCartItem(item)
+function trimmedCart(itemsarray)
+{
+	var result = [];
+	itemsarray.forEach(function(item)
 	{
-		$.ajax({
-	 
-		    // The URL for the request
-		    url: serverUrl+"/cart/"+item._id,
-		 
-		    // Whether this is a POST or GET request
-		    type: "DELETE",
-		 
-		    // The type of data we expect back
-		    // dataType : "json",
-		    contentType:'application/json',  // <---add this
-    		dataType: 'text',                // <---update this
-		})
-		  .done(function( json ) {
-		  })
-		  .fail(function( xhr, status, errorThrown ) {
-		    alert( "Sorry, there was a problem!" );
-		    console.log( "Error: " + errorThrown );
-		    console.log( "Status: " + status );
-		    console.dir( xhr );
-		  });
-		  
-	}
-function patchCartItem(item)
-	{
-		$.ajax({
-	 
-		    // The URL for the request
-		    url: serverUrl+"/cart/"+item._id,
-		 
-		    data: item,
-		 
-		    // Whether this is a POST or GET request
-		    type: "PATCH",
-		 
-		    // The type of data we expect back
-		    dataType : "json",
-		})
-		  .done(function( json ) {
-
-		  })
-		  .fail(function( xhr, status, errorThrown ) {
-		    alert( "Sorry, there was a problem!" );
-		    console.log( "Error: " + errorThrown );
-		    console.log( "Status: " + status );
-		    console.dir( xhr );
-		  });
-	}
+		if(item.quantity>0)
+			result.push(item);
+	})
+	return result;
+}
+function postWholeCart()
+{
+	wholeCartObject.items = trimmedCart(cartItems);
+	$.ajax({
+	    url: serverUrl + "/cart",
+	    data: wholeCartObject,
+	    type: "POST",
+	    dataType : "json",
+	})
+	  .done(function( json ) {
+	  	wholeCartObject=json;
+	  })
+	  .fail(function( xhr, status, errorThrown ) {
+	    alert( "Sorry, there was a problem!" );
+	    console.log( "Error: " + errorThrown );
+	    console.log( "Status: " + status );
+	    console.dir( xhr );
+	  });
+}

@@ -20,18 +20,17 @@ var serverUrl= "http://localhost:3000";
 
 document.getElementById("signinButton").addEventListener("click", function(e)
 {
+	e.preventDefault();
 	signinPasswordError.style.display="none";
 	signinEmailError.style.display="none";
 	var filled = true;
 	if(signinEmail.value == "" || signinEmail.value.indexOf("@")==-1 || signinEmail.value.indexOf(".")==-1)
 	{
-		e.preventDefault();
 		signinEmailError.style.display = "block";
 		filled=false;
 	}
 	if(signinPassword.value == "")
 	{
-		e.preventDefault();
 		signinPasswordError.style.display = "block";
 		filled=false;
 	}
@@ -46,8 +45,6 @@ document.getElementById("signinButton").addEventListener("click", function(e)
 		dataType: 'json',
 	})
 	.done(function( json ) {
-	  	// console.log(json);f
-	  	// itemDatas = JSON.parse(json);
 	  	console.log(json);
 	  	if(json.length==0)
 	  	{
@@ -64,11 +61,11 @@ document.getElementById("signinButton").addEventListener("click", function(e)
 	    console.log( "Status: " + status );
 	    console.dir( xhr );
 	  })
-	  e.preventDefault();
 });
 
 document.getElementById("createAccountButton").addEventListener("click", function(e)
 {
+	e.preventDefault();
 	registerNameError.style.display="none";
 	registerLastNameError.style.display="none";
 	registerEmailError.style.display="none";
@@ -76,25 +73,21 @@ document.getElementById("createAccountButton").addEventListener("click", functio
 	var filled = true;
 	if(registerName.value == "")
 	{
-		e.preventDefault();
 		registerNameError.style.display = "block";
 		filled=false;
 	}
 	if(registerLastName.value == "")
 	{
-		e.preventDefault();
 		registerLastNameError.style.display = "block";
 		filled=false;
 	}
 	if(registerEmail.value == "" || registerEmail.value.indexOf("@")==-1 || registerEmail.value.indexOf(".")==-1)
 	{
-		e.preventDefault();
 		registerEmailError.style.display = "block";
 		filled=false;
 	}
 	if(registerPassword.value == "")
 	{
-		e.preventDefault();
 		registerPasswordError.style.display = "block";
 		filled=false;
 	}
@@ -112,8 +105,6 @@ document.getElementById("createAccountButton").addEventListener("click", functio
 			dataType: 'json'
 		})
 		.done(function( json ) {
-		  	// console.log(json);f
-		  	// itemDatas = JSON.parse(json);
 		  	console.log(json);
 		  	if(json==[])
 		  	{
@@ -124,20 +115,11 @@ document.getElementById("createAccountButton").addEventListener("click", functio
 		  		window.location = '/';
 		  	}
 	  })
-	  // Code to run if the request fails; the raw request and
-	  // status codes are passed to the function
 	  .fail(function( xhr, status, errorThrown ) {
 	    alert( "Sorry, there was a problem!" );
 	    console.log( "Error: " + errorThrown );
 	    console.log( "Status: " + status );
 	    console.dir( xhr );
 	  });
-	e.preventDefault();
 });
 
-// if (typeof(Storage) !== "undefined") {
-// 		var totalPrice = localStorage.getItem("totalPrice");
-// 		document.getElementById("cartTotal").innerHTML = totalPrice;
-// 	} else {
-
-// 	}

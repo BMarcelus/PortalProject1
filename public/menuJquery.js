@@ -1,15 +1,4 @@
-	// var button = $("<button/>").addClass('button').text("add to cart");
-	// var container = $('<div/>').addClass('menu-item');
-	// var title = $('<div/>').addClass('title').html(item.title);
-	// var image = $('<img/>').attr('id', `menu-${i}`).attr('src', item.img);
-	// var itemEle = $('<div/>').addClass("item").append(image);
 
-	// container
-	// 	.append(title)
-	// 	.append(itemEle)
-	// 	.append(button);
-
-// var serverUrl = "http://thiman.me:1337";
 var serverUrl = "http://localHost:3000";
 
 
@@ -20,6 +9,8 @@ var serverUrl = "http://localHost:3000";
 	var popupOverlay = $('.popupOverlay');
 	var modal = $('#modal');
 
+	var wholeCartObject = {};
+
 
 	var menuDiv = document.getElementById("menu");
 
@@ -27,48 +18,30 @@ var serverUrl = "http://localHost:3000";
 	{
 		return "$" + value + ".00";
 	}
-	function cartToString()
+	function trimmedCart(itemsarray)
 	{
-		var result = "[";
-		for(var i =0;i<cart.length;i++)
+		var result = [];
+		itemsarray.forEach(function(item)
 		{
-			result += cart[i]+",";
-		}
-		result += "]";
+			if(item.quantity>0)
+				result.push(item);
+		})
 		return result;
 	}
-	function addIndexToCart(index)
+	function postWholeCart()
 	{
-		cart[index] ++;
-		cartTotal += itemDatas[index].price;
-		cartTotalDisplay.innerHTML = priceString(cartTotal);
-		// $("#cartTotal").html(priceString(cartTotal));
-		localStorage.setItem("cart", cartToString());
-		localStorage.setItem("totalPrice", priceString(cartTotal));
-	}
-
-	function postCartItem(item)
-	{
+		wholeCartObject.items = trimmedCart(cart);
+		// console.log(wholeCartObject);
 		$.ajax({
-	 
-		    // The URL for the request
-		    url: serverUrl + "/cart",// "http://thiman.me:1337/cart/brian",
-		 
-		    data: item,
-		 
-		    // Whether this is a POST or GET request
+		    url: serverUrl + "/cart",
+		    data: wholeCartObject,
 		    type: "POST",
-		 
-		    // The type of data we expect back
 		    dataType : "json",
 		})
-		// Code to run if the request succeeds (is done);
-		  // The response is passed to the function
 		  .done(function( json ) {
-		  	item._id = json._id;
+		  	// console.log(json);
+		  	wholeCartObject=json;
 		  })
-		  // Code to run if the request fails; the raw request and
-		  // status codes are passed to the function
 		  .fail(function( xhr, status, errorThrown ) {
 		    alert( "Sorry, there was a problem!" );
 		    console.log( "Error: " + errorThrown );
@@ -76,35 +49,7 @@ var serverUrl = "http://localHost:3000";
 		    console.dir( xhr );
 		  });
 	}
-	function patchCartItem(item)
-	{
-		$.ajax({
-	 
-		    // The URL for the request
-		    url: serverUrl+"/cart/"+item._id,
-		 
-		    data: item,
-		 
-		    // Whether this is a POST or GET request
-		    type: "PATCH",
-		 
-		    // The type of data we expect back
-		    dataType : "json",
-		})
-		// Code to run if the request succeeds (is done);
-		  // The response is passed to the function
-		  .done(function( json ) {
-		  })
-		  // Code to run if the request fails; the raw request and
-		  // status codes are passed to the function
-		  .fail(function( xhr, status, errorThrown ) {
-		    alert( "Sorry, there was a problem!" );
-		    console.log( "Error: " + errorThrown );
-		    console.log( "Status: " + status );
-		    console.dir( xhr );
-		  });
-	}
-
+	
 	function addIdToCart(id)
 	{
 		for(var i =0;i<cart.length;i++)
@@ -113,14 +58,6 @@ var serverUrl = "http://localHost:3000";
 			if(item.menuID ==id)
 			{
 				item.quantity++;
-				if(item.quantity==1)
-				{
-					postCartItem(item);
-				}
-				else
-				{
-					patchCartItem(item);
-				}
 				break;
 			}
 		}
@@ -134,39 +71,9 @@ var serverUrl = "http://localHost:3000";
 				break;
 			}
 		}
-		// cart[index] ++;
-		// cartTotal += itemDatas[index].price;
-		// cartTotalDisplay.innerHTML = priceString(cartTotal);
-		// localStorage.setItem("cart", cartToString());
-		// localStorage.setItem("totalPrice", priceString(cartTotal));
+		wholeCartObject.totalPrice = cartTotal;
+		postWholeCart();
 	}
-
-	// if (typeof(Storage) !== "undefined") {
-	// 	var cartString = localStorage.getItem("cart");
-	// 	var quantityStrings = [];
-	// 	for(var i=0;i<itemDatas.length;i++)quantityStrings[i]="";
-	// 	var index = 0;
-	// 	for(var i =1;i<cartString.length-1;i++)
-	// 	{
-	// 		if(cartString[i]==",")
-	// 		{
-	// 			index++;
-	// 			continue;
-	// 		}
-	// 		quantityStrings[index] += cartString[i];
-	// 	}
-	// 	var quantityInts = [];
-	// 	for(var i=0;i<quantityStrings.length;i++)
-	// 	{
-	// 		quantityInts[i] = parseInt(quantityStrings[i]);
-
-	// 		cartTotal += itemDatas[i].price * quantityInts[i];
-	// 	}
-	// 	cartTotalDisplay.innerHTML = priceString(cartTotal);
-	// 	cart=quantityInts;
-	// } else {
-
-	// }
 
 	popupOverlay.on("click", function()
 	{
@@ -190,18 +97,25 @@ var serverUrl = "http://localHost:3000";
 			if(array[i]._id == id)return array[i];
 		}
 	}
-
+	var cartItems;
 	function loadCart(json)
 	{
-		for(var i =0;i<json.length;i++)
+		if(json)
+			wholeCartObject=json;
+		else
+			wholeCartObject={};
+		if(!wholeCartObject||!wholeCartObject.items)
+			cartItems=[];
+		else
+			cartItems= json.items;
+		for(var i =0;i<cartItems.length;i++)
 		{
-			var cartItem = findByMenuId(cart, json[i].menuID);
-			cartItem.quantity = json[i].quantity;
-			cartItem._id = json[i]._id;
-			var item = findById(itemDatas, json[i].menuID);
+			var cartItem = findByMenuId(cart, cartItems[i].menuID);
+			cartItem.quantity = cartItems[i].quantity;
+			cartItem._id = cartItems[i]._id;
+			var item = findById(itemDatas, cartItems[i].menuID);
 			cartTotal += parseInt(item.price) * parseInt(cartItem.quantity);
 		}
-		// $("#cartTotal").html(priceString(cartTotal));
 		cartTotalDisplay.innerHTML = priceString(cartTotal);
 	}
 
@@ -227,27 +141,18 @@ var serverUrl = "http://localHost:3000";
 		    // The type of data we expect back
 		    dataType : "json",
 		})
-		// Code to run if the request succeeds (is done);
-		  // The response is passed to the function
 		  .done(function( json ) {
 		  	// console.log(json);
-		  	// itemDatas = JSON.parse(json);
 		  	loadCart(json);
 		  })
-		  // Code to run if the request fails; the raw request and
-		  // status codes are passed to the function
 		  .fail(function( xhr, status, errorThrown ) {
 		    alert( "Sorry, there was a problem!" );
 		    console.log( "Error: " + errorThrown );
 		    console.log( "Status: " + status );
 		    console.dir( xhr );
 		  })
-		  // Code to run regardless of success or failure;
-		  .always(function( xhr, status ) {
-		    // alert( "The request is complete!" );
-		  });
 	}
-	// dynamicLoad();
+
 	function dynamicAdd(index)
 	{
 		var item = itemDatas[index];
@@ -274,9 +179,6 @@ var serverUrl = "http://localHost:3000";
 
 			orderButton.addEventListener("click",function()
 			{
-				// popups[this.name].style.display="block";
-				// popupOverlay.style.display="block";
-				// currentPopup = popups[this.name];
 				popupOverlay.removeClass("hide");
 				modal.removeClass("hide");
 				document.querySelector('#modal h4').innerHTML = item.name;
@@ -286,15 +188,6 @@ var serverUrl = "http://localHost:3000";
 			});
 		}
 		menuDiv.appendChild(gridItem);
-
-		// var gridItem2 = `<div class = "gridItem">
-		// 	<h3>${item.name}</h3>
-		// 	<img src = ${item.img}/><br>
-		// 	<button class="addButton" name = ${index}>Order Now</button><br>
-		// </div>`;
-
-		// menuDiv.appendChild(gridItem2);
-
 
 		
 	}

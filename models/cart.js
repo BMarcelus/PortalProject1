@@ -1,9 +1,13 @@
 var mongoose = require('mongoose');
 
-var schema = {
+var item = {
 	menuID: String,
-	userID: String,
 	quantity: Number
+}
+var schema = {
+	userID: String,
+	totalPrice: Number,
+	items: [item]
 }
 
 
