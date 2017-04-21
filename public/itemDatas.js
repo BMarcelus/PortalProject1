@@ -45,7 +45,7 @@
 
 var itemDatas;
 // var serverUrl = "http://thiman.me:1337";
-var serverUrl = "http://localHost:3000";
+var serverUrl = "."//http://localHost:3000";
 
 $.ajax({
  

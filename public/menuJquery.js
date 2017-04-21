@@ -1,5 +1,5 @@
 
-var serverUrl = "http://localHost:3000";
+var serverUrl = "."//http://localHost:3000";
 
 
 	var cart = [];

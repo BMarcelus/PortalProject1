@@ -7,9 +7,14 @@ var UserModel = require('../models/user.js');
 router.post('/', function(req,res)
 {
 	var body = req.body;
-	UserModel.findOne({email: body.email.trim()},function(err,doc1)
+	if(!body.password || !body.email || !body.firstname || !body.lastname)
 	{
-		if(doc1)
+		console.log("Missing Data");
+		return res.json([]);
+	}
+	UserModel.findOne({email: body.email.trim()},function(err,existingUser)
+	{
+		if(existingUser)
 		{
 			return res.json([]);
 		}
@@ -64,6 +69,20 @@ router.post('/login/', function(req, res, next) {
 			res.json([]);
 		}
 	});
+});
+
+router.delete('/', function(req,res,next){
+	UserModel.findOneAndDelete({email: req.body.email.trim()}, function(err,user){
+		if(err){
+			console.log(err);
+			res.send(err);
+		}
+		else
+		{
+			console.log(user);
+			res.json(user);
+		}
+	})
 });
 
 module.exports = router;

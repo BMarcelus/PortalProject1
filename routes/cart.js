@@ -15,10 +15,10 @@ router.post('/', function(req,res)
 	var body = req.body;
 	if(!req.session.user)req.session.user = {_id: uuidV1(), guest: true};
 	var userID = req.session.user._id;
-	var totalPrice=parseInt(body.totalPrice); 
+	var totalPrice=body.totalPrice ? parseInt(body.totalPrice) : 0; 
 	req.session.user.totalPrice = totalPrice;
 	body.userID=userID;
-	var items= body.items;
+	var items= body.items || [];
 	var cartBody = {
 		userID,
 		items,

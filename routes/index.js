@@ -9,7 +9,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/checkout', function(req, res, next) {
-  res.render('checkout', { title: 'Cart-Triangle Food Service', cartTotal: "$0.00", user:req.session.user});
+	var cartTotal = "$0.00";
+	if(req.session.user&&req.session.user.totalPrice)
+	{
+		cartTotal = "$" + req.session.user.totalPrice + ".00";
+	}
+  res.render('checkout', { title: 'Cart-Triangle Food Service', cartTotal: cartTotal, user:req.session.user});
 });
 
 router.get('/cartpage', function(req, res, next) {

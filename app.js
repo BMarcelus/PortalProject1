@@ -9,7 +9,7 @@ var session = require('client-sessions');
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/onlineorders');
+mongoose.connect("mongodb://localhost/" +(process.env.DATABASE || 'onlineorders'));
 
 
 var app = express();
@@ -38,11 +38,13 @@ var index = require('./routes/index');
 var menu = require('./routes/menu');
 var cart = require('./routes/cart');
 var user = require('./routes/users');
+var orders = require('./routes/orders');
 
 app.use('/', index);
 app.use('/menu', menu);
 app.use('/cart', cart);
 app.use('/user', user)
+app.use('/orders', orders)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

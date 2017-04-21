@@ -15,7 +15,7 @@ var registerEmailError = document.querySelector("#registerEmailMissing");
 var registerPasswordError = document.querySelector("#registerPasswordMissing");
 
 
-var serverUrl= "http://localhost:3000";
+var serverUrl= ".";
 
 
 document.getElementById("signinButton").addEventListener("click", function(e)
@@ -52,6 +52,7 @@ document.getElementById("signinButton").addEventListener("click", function(e)
 	  	}
 	  	else
 	  	{
+	  		// console.log(json);
 	 	 	window.location = '/';	
 	  	}
 	 })
