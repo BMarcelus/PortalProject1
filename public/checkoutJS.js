@@ -40,6 +40,7 @@ $('form').on("submit", function(e){
 		}
 		j=i;
 	}
+	j++;
 	if(paymentOption[0].selectedIndex == 0)
 	{
 		for(var i =0;i<creditFields.length;i++)
@@ -101,6 +102,8 @@ $('form').on("submit", function(e){
 		    dataType : "json",
 		})
 		  .done(function( json ) {
+		  	window.location = "/receipt";
+
 		  })
 		  .fail(function( xhr, status, errorThrown ) {
 		    alert( "Sorry, there was a problem!" );

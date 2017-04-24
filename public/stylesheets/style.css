@@ -7,6 +7,10 @@ a {
   color: #00B7FF;
 }
 */
+footer{
+	margin-top: 1em;
+}
+
 #container {
 	background-color: white;
 	color:black;
@@ -46,6 +50,7 @@ nav li a {
 nav li a:hover {
     background-color: #555;
     border: 3px solid black;
+    color: white;
 }
 
 nav li {

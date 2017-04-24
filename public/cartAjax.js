@@ -77,7 +77,7 @@
 
 		div2.appendChild(title);
 		div2.appendChild(remove);
-		div2.appendChild(details);
+		// div2.appendChild(details);
 		div2.appendChild(add);
 		div2.appendChild(cost);
 

@@ -20,6 +20,7 @@ var serverUrl= ".";
 
 document.getElementById("signinButton").addEventListener("click", function(e)
 {
+	console.log('a');
 	e.preventDefault();
 	signinPasswordError.style.display="none";
 	signinEmailError.style.display="none";
@@ -52,7 +53,7 @@ document.getElementById("signinButton").addEventListener("click", function(e)
 	  	}
 	  	else
 	  	{
-	  		// console.log(json);
+	  		console.log(json);
 	 	 	window.location = '/';	
 	  	}
 	 })

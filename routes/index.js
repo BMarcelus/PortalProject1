@@ -10,11 +10,21 @@ router.get('/', function(req, res, next) {
 
 router.get('/checkout', function(req, res, next) {
 	var cartTotal = "$0.00";
+	var user;
+	if(req.session.user)
+		user=req.session.user;
+	else
+		user={}
 	if(req.session.user&&req.session.user.totalPrice)
 	{
 		cartTotal = "$" + req.session.user.totalPrice + ".00";
 	}
-  res.render('checkout', { title: 'Cart-Triangle Food Service', cartTotal: cartTotal, user:req.session.user});
+	else
+	{
+		res.redirect('/');
+		return;
+	}
+  res.render('checkout', { title: 'Cart-Triangle Food Service', cartTotal: cartTotal, user:user});
 });
 
 router.get('/cartpage', function(req, res, next) {
@@ -23,8 +33,27 @@ router.get('/cartpage', function(req, res, next) {
 
 router.get('/signin', function(req, res, next) {
 	if(req.session.user&&!req.session.user.guest)
-	req.session.user=0;
+	{
+		if(req.session.guestID){
+			req.session.user = {_id: req.session.guestID, guest: true}
+		}
+		else{
+			req.session.user=0;
+		}
+	}
   res.render('signin', { title: 'Login-Triangle Food Service', cartTotal: "$0.00", user:req.session.user});
 });
+
+router.get('/receipt', function(req,res,next){
+	var cartTotal = "$0.00";
+	var user;
+	if(req.session.user)
+		user=req.session.user;
+	if(req.session.user&&req.session.user.totalPrice)
+	{
+		cartTotal = "$" + req.session.user.totalPrice + ".00";
+	}
+	res.render('receipt', {title: 'Receipt-Triangle Food Service', cartTotal:cartTotal, user:req.session.user})
+})
 
 module.exports = router;

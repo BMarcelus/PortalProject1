@@ -13,7 +13,11 @@ var CartModel = require("../models/cart");
 router.post('/', function(req,res)
 {
 	var body = req.body;
-	if(!req.session.user)req.session.user = {_id: uuidV1(), guest: true};
+	if(!req.session.user){
+		var id = uuidV1();
+		req.session.guestID = id;
+		req.session.user = {_id: id, guest: true};
+	}
 	var userID = req.session.user._id;
 	var totalPrice=body.totalPrice ? parseInt(body.totalPrice) : 0; 
 	req.session.user.totalPrice = totalPrice;
@@ -49,9 +53,10 @@ router.get('/', function(req, res) {
 			res.send(err);
 		}
 		else {
-			if(cart)
+			if(cart){
+				req.session.user.totalPrice=cart.totalPrice;
 				res.json(cart);
-			else {
+			} else {
 				res.json({});
 			}
 		}
