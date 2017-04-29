@@ -98,7 +98,7 @@ module.exports = router;
 /*
 Guest cart should be added to user account when signing in - upon verification
 info should be saved to user upon checkout
-Receipt page should get order from 
+Receipt page should get order
 
 Look into
 	Bootstrap

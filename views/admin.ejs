@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <script language="javascript" src="./jquery-3.2.0.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+  	<div id="container">
+	    <%- include('header.ejs',{cartTotal: cartTotal}); %>
+
+	    <h3>Admin</h3>
+		<form>
+			<fieldset>
+				<legend>Create Coupon</legend>
+				<label for="Name">Name:</label><br/>
+				<input required type="text" name = "Name"/><br/>
+				<label for="Code">Code:</label><br/>
+				<input required type="text" name = "Code"/><br/>
+				<label >Coupon Type:</label><br/>
+				<select value = "none">
+					<option >Percentage Off</option>
+					<option>Flat $ Discount</option>
+					<option>Buy One Get One Free</option>
+				</select><br>
+
+				<label id="discountLabel" for="discount">Percentage Off:</label><br/>
+				<input required type="number" name = "discount"/><br/>
+				<label for="numuse">Number of Uses:</label><br/>
+				<input required type="number" name = "numuse"/><br/>
+				<br>
+				<input type = "submit"/>
+			</fieldset>
+		</form>
+		<br>
+		<h2>Coupons:</h2>
+		<div id = "couponList">
+		</div>
+
+	    <%- include('footer.ejs',{}); %>
+	</div>
+
+
+	<script type="text/javascript" src = "/javascripts/admin.js"></script>
+  </body>
+</html>

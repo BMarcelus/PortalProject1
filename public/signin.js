@@ -18,9 +18,11 @@ var registerPasswordError = document.querySelector("#registerPasswordMissing");
 var serverUrl= ".";
 
 
-document.getElementById("signinButton").addEventListener("click", function(e)
+// document.getElementById("signinButton").addEventListener("click", function(e)
+
+$('#signinButton').on('click', function(e)
 {
-	console.log('a');
+	// console.log('a');
 	e.preventDefault();
 	signinPasswordError.style.display="none";
 	signinEmailError.style.display="none";

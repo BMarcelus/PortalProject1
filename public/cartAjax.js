@@ -1,9 +1,45 @@
 
 	var serverUrl = "."//"http://localHost:3000";
+	var activeCoupon;
+	var hasCoupon=false;
+	var discountPrice;
 	
-	function priceString(value)
+	function discountPriceString(value)
 	{
-		return "$" + value + ".00";
+		if(activeCoupon){
+			if(activeCoupon.discountType === "Percentage Off"){
+				value = value * (100-activeCoupon.discount)/100;
+			}
+			else if(activeCoupon.discountType === "Flat $ Discount"){
+				value -= activeCoupon.discount;
+			}
+			else if(activeCoupon.discountType === "Buy One Get One Free")
+			{
+				var max, secondMax;
+				wholeCartObject.items.forEach(function(item){
+					var mi = findById(itemDatas, item.menuID);
+					if(mi){
+						var price = mi.price;
+						if(!max||price>=max){
+							secondMax=max;
+							max=price;
+							if(item.quantity>1)secondMax=max;
+						}
+					}
+				})
+				if(secondMax){
+					value-=secondMax;
+				}
+			}
+			if(value<0)value=0;
+			discountPrice = value;
+		
+		}
+		return "$"+value;
+		// return "$" + value + ( (Math.floor(value)==value) ? ".00" : "");
+	}
+	function priceString(value){
+		return "$"+value;
 	}
 
 	var cartArray = [0,0,0,0,0,0];
@@ -26,8 +62,8 @@
 
 		cartItem.quantity = parseInt(cartItem.quantity) - 1;
 
-		totalPriceDisplay.innerHTML = priceString(totalPriceCount);
-		cartTotalDisplay.innerHTML = priceString(totalPriceCount);
+		totalPriceDisplay.innerHTML = discountPriceString(totalPriceCount);
+		cartTotalDisplay.innerHTML = discountPriceString(totalPriceCount);
 
 		wholeCartObject.totalPrice = totalPriceCount;
 		postWholeCart();
@@ -82,8 +118,8 @@
 		div2.appendChild(cost);
 
 		totalPriceCount += parseInt(item.price);
-		totalPriceDisplay.innerHTML = priceString(totalPriceCount);
-		cartTotalDisplay.innerHTML = priceString(totalPriceCount);
+		totalPriceDisplay.innerHTML = discountPriceString(totalPriceCount);
+		cartTotalDisplay.innerHTML = discountPriceString(totalPriceCount);
 
 		if(shouldUpdate)
 		{
@@ -110,6 +146,7 @@ function dynamicLoad()
 	    console.log( "Status: " + status );
 	    console.dir( xhr );
 	  })
+
 }
 
 
@@ -133,6 +170,11 @@ function loadCart(json)
 	if(!wholeCartObject||!wholeCartObject.items)
 		wholeCartObject.items=[];
 	cartItems = wholeCartObject.items;
+	if(wholeCartObject.coupon){
+		addCouponDisplay(wholeCartObject.coupon);
+		activeCoupon=wholeCartObject.coupon;
+		hasCoupon=true;
+	}
 	for(var i =0;i<cartItems.length;i++)
 	{
 		for(var j =0;j<cartItems[i].quantity;j++)
@@ -151,6 +193,8 @@ function trimmedCart(itemsarray)
 }
 function postWholeCart()
 {
+	if(hasCoupon)
+	wholeCartObject.discountPrice = discountPrice;
 	wholeCartObject.items = trimmedCart(cartItems);
 	$.ajax({
 	    url: serverUrl + "/cart",
@@ -168,3 +212,76 @@ function postWholeCart()
 	    console.dir( xhr );
 	  });
 }
+
+
+
+var couponDisplay = $('#couponList')[0];
+function addCouponDisplay(coupon){
+	couponDisplay.innerHTML = "";
+	var gridItem = document.createElement("div");
+	gridItem.className = "gridItem";
+	var title = document.createElement("H3");
+	title.innerHTML="Coupon: "+coupon.name;
+	var discountType = document.createElement("p");
+	discountType.innerHTML = "Discount Type: "+coupon.discountType;
+	var discount = document.createElement("p");
+	discount.innerHTML = "Discount: "+coupon.discount;
+
+
+
+	gridItem.appendChild(title);
+	gridItem.appendChild(discountType);
+	gridItem.appendChild(discount);
+
+	couponDisplay.appendChild(gridItem);
+
+}
+
+
+
+
+
+var couponCode = $('input[name=couponcode]')[0];
+$('#couponForm').on('submit', function(e){
+	e.preventDefault();
+	var code = couponCode.value;
+	$.ajax({
+		url:  "./coupons/code",
+		data: {code, cartID: wholeCartObject._id},
+	    type: "POST",
+	    dataType : "json",
+	})
+	  .done(function( res ) {
+
+	  	console.log(res);
+	  	if(res.noCart){
+	  		alert("No Cart");
+	  	}
+	  	else if(res.outOfUses){
+	  		alert("Out of uses");
+	  	}
+	  	else if(res.disabled){
+	  		alert("Error: Coupon disabled")
+	  	}
+	  	else if(res.invalidCode){
+	  		alert("Invalid Code");
+	  	}
+	  	else{
+	  		// alert("success");
+	  		addCouponDisplay(res.coupon);
+	  		activeCoupon=res.coupon;
+	  		hasCoupon=true;
+	  		// totalPriceCount = res.newPrice;
+	  		totalPriceDisplay.innerHTML = discountPriceString(totalPriceCount);
+			cartTotalDisplay.innerHTML = discountPriceString(totalPriceCount);
+	  	}
+	  })
+	  .fail(function( xhr, status, errorThrown ) {
+	    alert( "Sorry, there was a problem!" );
+	    console.log( "Error: " + errorThrown );
+	    console.log( "Status: " + status );
+	    console.dir( xhr );
+	  });
+})
+
+

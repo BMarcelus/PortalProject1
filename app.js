@@ -39,12 +39,14 @@ var menu = require('./routes/menu');
 var cart = require('./routes/cart');
 var user = require('./routes/users');
 var orders = require('./routes/orders');
+var coupons = require('./routes/coupon');
 
 app.use('/', index);
 app.use('/menu', menu);
 app.use('/cart', cart);
 app.use('/user', user)
 app.use('/orders', orders)
+app.use('/coupons', coupons);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

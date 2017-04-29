@@ -10,7 +10,7 @@ router.post('/', function(req,res)
 	var body = req.body;
 	if(!body.password || !body.email || !body.firstname || !body.lastname)
 	{
-		console.log("Missing Data");
+		//Missing data
 		return res.json([]);
 	}
 	UserModel.findOne({email: body.email.trim()},function(err,existingUser)
@@ -45,7 +45,6 @@ router.post('/', function(req,res)
 });
 
 function mergeCarts(guest, user, done){
-	console.log('in merge');
 	CartModel.findOne({userID: user._id}, function(err, userCart){
 		if(err)return done(err);
 		CartModel.findOneAndRemove({userID: guest._id}, function(err2, guestCart){
@@ -83,7 +82,6 @@ function mergeCarts(guest, user, done){
 
 router.post('/login/', function(req, res, next) {
 
-				console.log('in login');
 	UserModel.findOne({email: req.body.email.trim()}, function(err, user)
 	{
 		if(err)
@@ -95,26 +93,10 @@ router.post('/login/', function(req, res, next) {
 		{
 			if(user.comparePasswords(req.body.password.trim()))
 			{
-				console.log('in password');
-				if(req.session.user)
-				{
-					// mergeCarts(req.session.user, user, function(err){
-					// 	if(err){
-					// 		console.log(err);
-					// 		res.send(err);
-					// 	}
-					// 	else
-					// 	{
-					// 		req.session.user = user.toJson();
-					// 		res.json(user.toJson());
-					// 	}
-					// })
-				}
-				// else
-				// {
-					req.session.user = user.toJson();
-					res.json(user.toJson());
-				// }
+				
+				req.session.user = user.toJson();
+				res.json(user.toJson());
+
 			}else
 			res.json([]);
 		}
@@ -126,14 +108,14 @@ router.post('/login/', function(req, res, next) {
 });
 
 router.delete('/', function(req,res,next){
-	UserModel.findOneAndDelete({email: req.body.email.trim()}, function(err,user){
+
+	UserModel.findOneAndRemove({email: req.body.email.trim()}, function(err,user){
 		if(err){
 			console.log(err);
 			res.send(err);
 		}
 		else
 		{
-			console.log(user);
 			res.json(user);
 		}
 	})

@@ -14,11 +14,12 @@ before(function(){
 });
 
 
-describe.skip("Menu", function(){
+describe("Menu", function(){
 	it('should post a menu object on post', function(done){
 		request
 			.post(`http://localhost:${port}/menu`)
 			.send({
+				_id: "testMenuID",
 				name: "test",
 				details: "this is a test",
 				price: 42,
@@ -45,27 +46,39 @@ describe.skip("Menu", function(){
 	});
 })
 describe('User',function(){
-	it('Post login to user' ,function(done)
-	{
+	
+
+	it("can make create user request", function(done){
 		request
-			.post(`http://localhost:${port}/user/login`)
+			.post(`http://localhost:${port}/user`)
 			.send({
-				email:"test",
-				password: "a"
+				email: "test",
+				password: "a",
+				firstname: "Tester",
+				lastname: "McTesterson"
 			})
 			.then(function(res){
-				assert.equal(res.statusCode, 200, 'invalid status code');
-				assert.equal(res.type, 'application/json', 'response type not json');
-				assert.isObject(res.body, "response body not an object");
-				assert.equal(res.body.email, "test", "user email not matched in login");
-
+				done();
+			})
+			.catch(function(err){
+				done(err);
+			})
+	});
+	it("can make delete user request", function(done){
+		request
+			.delete(`http://localhost:${port}/user`)
+			.send({
+				email: "test"
+			})
+			.then(function(res){
 				done();
 			})
 			.catch(function(err){
 				done(err);
 			})
 	})
-	it.skip('Post create new user', function(done)
+
+	it('Can post create new user', function(done)
 	{
 		request
 		.delete(url + "/user")
@@ -95,6 +108,27 @@ describe('User',function(){
 			});
 		})
 		
+	})
+
+	it('Post login to user' ,function(done)
+	{
+		request
+			.post(`http://localhost:${port}/user/login`)
+			.send({
+				email:"test",
+				password: "a"
+			})
+			.then(function(res){
+				assert.equal(res.statusCode, 200, 'invalid status code');
+				assert.equal(res.type, 'application/json', 'response type not json');
+				assert.isObject(res.body, "response body not an object");
+				assert.equal(res.body.email, "test", "user email not matched in login");
+
+				done();
+			})
+			.catch(function(err){
+				done(err);
+			})
 	})
 });
 
@@ -181,19 +215,16 @@ describe('Logged in session interactions', function()
 			.send(cartObject)
 			.then(function(res){
 				assert.equal(res.body.userID, userID, "Cart does not have user ID");
-				agent
+				return agent
 					.get(url+'/cart')
-					.then(function(res){
-						assert.equal(res.body.userID, userID, "Retrieved Cart object does not have user ID");
-						assert.equal(res.body.totalPrice, 7, "Retrieved Cart totalPrice does not matched sent");
-						assert.equal(res.body.items.length, 1, "Retrieved Cart items has incorrect length");
-						assert.equal(res.body.items[0].menuID, 3, "Retrieved Cart items object menuID does not matched sent");
-						assert.equal(res.body.items[0].quantity, 4, "Retrieved Cart items object quantity does not matched sent");
-						done();
-					})
-					.catch(function(err){
-						done(err);
-					})
+			})
+			.then(function(res){
+				assert.equal(res.body.userID, userID, "Retrieved Cart object does not have user ID");
+				assert.equal(res.body.totalPrice, 7, "Retrieved Cart totalPrice does not matched sent");
+				assert.equal(res.body.items.length, 1, "Retrieved Cart items has incorrect length");
+				assert.equal(res.body.items[0].menuID, 3, "Retrieved Cart items object menuID does not matched sent");
+				assert.equal(res.body.items[0].quantity, 4, "Retrieved Cart items object quantity does not matched sent");
+				done();
 			})
 			.catch(function(err){
 				done(err);
@@ -205,17 +236,14 @@ describe('Logged in session interactions', function()
 	{
 		agent.get(url+'/signin')
 			.then(function(){
-				agent
+				return agent
 					.post(url+'/cart')
 					.send({})
-					.then(function(res){
-						res.userID
-						assert.notEqual(res.body.userID, userID, "userID not changed after logout");
-						done();
-					})
-					.catch(function(err){
-						console.log(err);
-					})
+			})
+			.then(function(res){
+				res.userID
+				assert.notEqual(res.body.userID, userID, "userID not changed after logout");
+				done();
 			})
 			.catch(function(err){
 				done(err);
@@ -237,5 +265,195 @@ describe('Logged in session interactions', function()
 		  	done(err);
 		  })
 	})
+})
+
+
+
+describe("coupon", function(){
+	it("can make delete request",function(done){
+		request
+			.delete(`http://localhost:${port}/coupons/`)
+			.send({code: "testCode"})
+			.then(function(res){
+				done();
+			})
+			.catch(function(err){
+				done(err);
+			})
+	});
+	it("should create coupon on post", function(done){
+		request
+			.post(`http://localhost:${port}/coupons`)
+			.send({
+				name:"testCoupon",
+				code: "testCode",
+				discountType: "Percentage Off",
+				discount: "10",
+				numberOfUses: "2",
+			})
+			.then(function(coupon){
+				done();
+			})
+			.catch(function(err){
+				done(err);
+			});
+	})
+	it("should get coupons on get", function(done){
+		request
+			.get(`http://localhost:${port}/coupons`)
+			.then(function(res){
+				//Check status code
+				assert.equal(res.statusCode, 200, 'invalid status code');
+				//Check content type
+				assert.equal(res.type, 'application/json', 'response type not json');
+				//Check data
+				assert.isOk(Array.isArray(res.body), 'Expected Coupons response to be an array');
+				done();
+			})
+			.catch(function(err){
+				done(err);
+			});
+	})
+	it.skip("incorrect cart does not decrement num count", function(done){
+		request
+			.post(`http://localhost:${port}/coupons/code`)
+			.send({
+				code: "testCode"
+			})
+			.then(function(res){
+				var coupon = res.body;
+				assert.isOk(coupon.noCart, "coupon did not successfully pass enabled and number of uses");
+				return request.post(`http://localhost:${port}/coupons/code`)
+					.send({
+						code: "testCode"
+					})
+			})
+			.then(function(res){
+				var coupon = res.body;
+				assert.isOk(coupon.noCart, "coupon did not successfully pass enabled and number of uses");
+				return request.post(`http://localhost:${port}/coupons/code`)
+					.send({
+						code: "testCode"
+					})
+			})
+			.then(function(res){
+				var coupon = res.body;
+				assert.isOk(coupon.noCart, "coupon ran out of uses despite not saving to a cart");
+				done();
+			})
+			.catch(function(err){
+				done(err);
+			})
+	})
+	it.skip("can add coupon to cart only 2 times", function(){
+		var cartID;
+		request
+			.get(`http://localhost:${port}/cart`)
+			.then(function(cart){
+				console.log(cart);
+				cartID = cart._id;
+				return request
+				.post(`http://localhost:${port}/coupons/code`)
+				.send({
+					code: "testCode",
+					cartID: cart._id
+				})
+			})
+			.then(function(res){
+				var coupon = res.body;
+				console.log(res);
+				return request
+				.post(`http://localhost:${port}/coupons/code`)
+				.send({
+					code: "testCode",
+					cartID
+				})
+			})
+			.then(function(res){
+				return request
+				.post(`http://localhost:${port}/coupons/code`)
+				.send({
+					code: "testCode",
+					cartID
+				})
+			})
+			.then(function(res) {
+				var coupon = res.body;
+			})
+			.catch(function(err){
+				done(err);
+			});
+	})
+});
+
+
+describe("Coupon Usage", function(){
+	let agent;
+	let userID;
+	before(function(done)
+	{
+		agent = request.agent();
+		agent
+		  .post(`http://localhost:${port}/user/login`)
+		  .withCredentials()
+		  .send({
+				email:"test",
+				password: "a"
+			})
+		  .end(function(err,res)
+		  {
+		  	userID=res.body._id;
+		  	done();
+		  })
+	});
+
+	it("can add coupon to cart only 2 times",function(done){
+		var cartID;
+		agent
+			.post(url+"/cart")
+			.send({})
+			.then(function(res)
+			{
+				var cart = res.body;
+				cartID=cart._id;
+				return agent
+				.post(`http://localhost:${port}/coupons/code`)
+				.send({
+					code: "testCode",
+					cartID: cart._id
+				})
+			})
+			.then(function(res){
+				var coupon = res.body;
+				return agent
+				.post(`http://localhost:${port}/coupons/code`)
+				.send({
+					code: "testCode",
+					cartID
+				})
+			})
+			.then(function(res){
+				var coupon=res.body;
+				return agent
+				.post(`http://localhost:${port}/coupons/code`)
+				.send({
+					code: "testCode",
+					cartID
+				})
+			})
+			.then(function(res) {
+				var coupon = res.body;
+				assert.isOk(coupon.outOfUses, 0);
+				done();
+			})
+			.catch(function(err){
+				done(err);
+			});
+
+	});	
+
+	
+
+
 })
 

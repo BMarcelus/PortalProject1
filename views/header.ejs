@@ -6,6 +6,7 @@
 			<li><a href="/">Home</a></li>
 			<li><a href="/signin"><%= (user&&user.firstname) ? ("Logout: "+user.firstname) : "Sign in" %></a></li>
 			<li><a href="/cartpage">Cart: <span id="cartTotal"><%= cartTotal%></span></a></li>
+			<li><a href="/admin">Admin</a></li>
 		</ul>
 	</nav>
 </header>

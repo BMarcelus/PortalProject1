@@ -15,11 +15,20 @@
 		</div>
 		<br>
 		<div>
-			Total Price:
-			<span id="totalprice"><%= cartTotal%></span>
+			<h4>
+				Total Price:
+				<span id="totalprice"><%= cartTotal%></span>
+			</h4>
 		</div>
 		<br>
-
+		<div id = "couponList">
+		</div>
+		<form id="couponForm">
+			<label for="couponcode">Coupon Code:</label><br>
+			<input required type = "text" name = "couponcode"/><br>
+			<input type = "submit" value = "Submit Coupon Code"/><br>
+		</form>
+		<br><br>
 		<form action="./checkout">
 		    <input type="submit" value="Proceed to Checkout" />
 		</form>

@@ -9,7 +9,6 @@ var CartModel = require("../models/cart");
 //ttl 
 //cronjob
 
-
 router.post('/', function(req,res)
 {
 	var body = req.body;
@@ -20,6 +19,7 @@ router.post('/', function(req,res)
 	}
 	var userID = req.session.user._id;
 	var totalPrice=body.totalPrice ? parseInt(body.totalPrice) : 0; 
+	if(body.discountPrice)totalPrice=parseInt(body.discountPrice);
 	req.session.user.totalPrice = totalPrice;
 	body.userID=userID;
 	var items= body.items || [];
@@ -54,6 +54,8 @@ router.get('/', function(req, res) {
 		}
 		else {
 			if(cart){
+				if(cart.discountPrice)req.session.user.totalPrice=cart.discountPrice;
+				else
 				req.session.user.totalPrice=cart.totalPrice;
 				res.json(cart);
 			} else {

@@ -7,7 +7,8 @@ var schema = mongoose.Schema({
 	password: String,
 	firstname: String,
 	lastname: String,
-	phoneNumber: String
+	phone: String,
+	
 })
 
 schema.methods.toJson = function()

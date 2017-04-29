@@ -2,12 +2,14 @@ var mongoose = require('mongoose');
 
 var item = {
 	menuID: String,
-	quantity: Number
+	quantity: Number,
 }
 var schema = {
 	userID: String,
 	totalPrice: Number,
-	items: [item]
+	discountPrice: Number,
+	items: [item],
+	coupon: Object
 }
 
 

@@ -39,22 +39,25 @@ nav ul {
 
 nav li a {
     text-decoration: none;
-    padding: 2em;
-    display: inline;
+    /*padding: 2em;*/
+    display: inline-block;
    	text-align: center;
    	background-color: #444;
+   	width: 100px;
     color: white;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 
 nav li a:hover {
     background-color: #555;
-    border: 3px solid black;
+    text-decoration: none;
+    /*border: 3px solid black;*/
+    text-shadow: 0px 4px 4px black;
+    transition: text-shadow .25s;
     color: white;
 }
 
 nav li {
-	/*float: left;*/
 	display: inline;
 
 }
@@ -88,15 +91,17 @@ header, footer {
 	width:auto;
 }
 button {
+	/*width: 100px;*/
+	/*height: 50px;*/
 	padding: 1em;
 	/*background-color:blue;*/
 }
 
 .popup{
-	text-align: center;
-	position: absolute;
-	background-color: white;
-	width:100%;
+	/*text-align: center;*/
+	/*position: absolute;*/
+	/*background-color: white;*/
+	/*width:100%;*/
 }
 
 
@@ -112,8 +117,10 @@ button {
 	width:100%;
 	max-width: 400px;
 	margin: auto;
-	border: 1px solid black;
+	border: 2px solid black;
+	border-radius: 50px;
 	/*display: inline-block;*/
+
 }
 .cartItem *{
 	display: inline-block;
@@ -127,6 +134,10 @@ button {
 	display: inline-block;
 	max-width: 50px;
 	max-height: 50px;
+}
+
+
+#totalprice{
 }
 
 .costDisplay {
@@ -161,6 +172,7 @@ fieldset {
 
 	/*width: 100%;*/
 	text-align: center;
+	margin-bottom: 3em;
 }
 
 
@@ -170,6 +182,19 @@ select {
 	height: 3em;
 }
 
+.addButton{
+}
+
+button:hover, input[type=submit]:hover{
+	text-shadow: 0px 4px 5px grey;
+	color: white;
+	background-color: black;
+	border: none;
+	transition: text-shadow .25s;
+	transition: color .25s;
+	transition: background-color .25s;
+}
+
 .inputButton
 {
 	margin: 2em;
@@ -177,14 +202,14 @@ select {
 
 .popup
 {
-	position: fixed;
+	/*position: fixed;*/
 	/*display: none;*/
-	top: 5%;
-	left: 38%;
+	/*top: 5%;*/
+	/*left: 38%;*/
 	/*margin: auto;*/
-	width:25%;
-	z-index: 3;
-	background: #999;
+	/*width:25%;*/
+	/*z-index: 3;*/
+	/*background: #999;*/
 }
 
 .popup img{
@@ -245,13 +270,14 @@ img
 
 #modal 
 {
+	background-color: white;
+	color: black;
 	position: fixed;
-	top: 5%;
+	top: 25%;
 	left: 38%;
 	/*margin: auto;*/
 	width:25%;
 	z-index: 3;
-	background: #999;
 }
 
 .hide 

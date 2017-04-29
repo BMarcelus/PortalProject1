@@ -13,10 +13,13 @@
 		<div class = "cart">
 		</div>
 		<br>
-		<div>
-			<h3>Total Price:</h3>
-			<span id="totalprice"><%= cartTotal%></span>
+		<div id = "couponList">
 		</div>
+		<div>
+			<h3>Total Price:
+			<span id="totalprice"><%= cartTotal%></span></h3>
+		</div>
+
 		<br>
 		<div class = "deliveryInfo">
 			<h3> Delivery Info </h3>
@@ -27,6 +30,9 @@
 			<h3> Payment Type </h3>
 			<%= user.order ? user.order.paymentType : "und" %>
 		</div>
+
+
+
 		<h2>Thank you for shopping at Triangle food service</h2>
 
 	    <%- include('footer.ejs',{}); %>

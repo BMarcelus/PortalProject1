@@ -12,31 +12,31 @@
 
 	    <h3>Sign In</h3>
 		<form id = "signinForm">
-			<label>Email:</label><br>
-			<input type="text" name="email">
+			<label >Email:</label><br>
+			<input required type="text" name="email">
 			<p class="errorMessage" id="signinEmailMissing">* Valid Email Required</p>
 			<br>
 			<label>Password:</label><br>
-			<input type="password" name="password">
+			<input required type="password" name="password">
 			<p class="errorMessage" id="signinPasswordMissing">* Password Required</p><br>
-			<input class = "inputButton" id="signinButton" type="submit" value="Sign In">
+			<input required class = "inputButton" id="signinButton" type="submit" value="Sign In">
 		</form>
 
 		<h3>Create An Account</h3>
 		<form id = "registerForm">
 			<label for="firstname">First Name:</label><br>
-			<input type="text" name="firstname">
+			<input required type="text" name="firstname">
 			<p class="errorMessage" id="registerNameMissing">* Field Required</p><br>
-			<label>Last Name:</label><br>
-			<input type="text" name="lastname">
+			<label >Last Name:</label><br>
+			<input required type="text" name="lastname">
 			<p class="errorMessage" id="registerLastNameMissing">* Field Required</p><br>
-			<label>Email:</label><br>
-			<input type="text" name="email">
+			<label >Email:</label><br>
+			<input required type="text" name="email">
 			<p class="errorMessage" id="registerEmailMissing">* Valid Email Required</p><br>
 			<label>Password:</label><br>
-			<input type="password" name="password">
+			<input required type="password" name="password">
 			<p class="errorMessage" id="registerPasswordMissing">* Password Required</p><br>
-			<input class = "inputButton" id="createAccountButton" type="submit" value="Create Account">
+			<input required class = "inputButton" id="createAccountButton" type="submit" value="Create Account">
 		</form>
 
 	    <%- include('footer.ejs',{}); %>
